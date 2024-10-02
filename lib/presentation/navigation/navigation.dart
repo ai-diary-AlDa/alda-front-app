@@ -6,7 +6,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         AutoRoute(page: SplashRoute.page, initial: true, path: '/'),
-        AutoRoute(page: MainRoute.page, children: [
+        AutoRoute(page: MainRoute.page, path: "/main", children: [
           AutoRoute(page: HomeRoute.page, path: 'home'),
           AutoRoute(page: CalendarRoute.page, path: 'calendar'),
         ]),
@@ -16,4 +16,10 @@ class AppRouter extends RootStackRouter {
             transitionsBuilder: TransitionsBuilders.slideLeft,
             durationInMilliseconds: 300)
       ];
+
+  @override
+  RouteType get defaultRouteType => const RouteType.custom(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        durationInMilliseconds: 500,
+      );
 }
