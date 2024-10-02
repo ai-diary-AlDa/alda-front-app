@@ -1,5 +1,5 @@
 import 'package:alda_front/presentation/navigation/navigation.gr.dart';
-import 'package:alda_front/presentation/pages/home/widgets/navigation_fab.dart';
+import 'package:alda_front/presentation/pages/main_route/widgets/navigation_fab.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
