@@ -14,7 +14,7 @@ class AppRouter extends RootStackRouter {
             page: DiaryTopicSelectRoute.page,
             path: '/diary-topic-select',
             transitionsBuilder: TransitionsBuilders.slideLeft,
-            durationInMilliseconds: 300)
+            durationInMilliseconds: 150)
       ];
 
   @override
