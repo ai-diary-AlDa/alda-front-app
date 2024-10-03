@@ -66,7 +66,7 @@ class _NavigationFABState extends State<NavigationFAB> {
                               duration: Duration(milliseconds: 300),
                               builder: (context, value, child) {
                                 return Icon(
-                                  Icons.home,
+                                  Icons.home_outlined,
                                   color: value,
                                 );
                               },
@@ -93,7 +93,7 @@ class _NavigationFABState extends State<NavigationFAB> {
                               duration: Duration(milliseconds: 300),
                               builder: (context, value, child) {
                                 return Icon(
-                                  Icons.calendar_month,
+                                  Icons.calendar_month_outlined,
                                   color: value,
                                 );
                               },
