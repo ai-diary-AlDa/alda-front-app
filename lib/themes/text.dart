@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
   static const _defaultFamily = 'Pretendard';
 
+  final TextStyle heading;
   final TextStyle title;
   final TextStyle body;
   final TextStyle label;
   const AppTextsTheme._internal({
+    required this.heading,
     required this.title,
     required this.body,
     required this.label,
@@ -15,8 +17,12 @@ class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
 
   factory AppTextsTheme.main() {
     return const AppTextsTheme._internal(
-      title: TextStyle(
+      heading: TextStyle(
           fontSize: 40, fontWeight: FontWeight.bold, fontFamily: 'NMFClassic'),
+      title: TextStyle(
+          fontSize: 24,
+          fontFamily: _defaultFamily,
+          fontWeight: FontWeight.bold),
       body: TextStyle(fontSize: 16, fontFamily: _defaultFamily),
       label: TextStyle(
           fontSize: 14, fontFamily: _defaultFamily, color: AppColors.black02),
@@ -29,6 +35,7 @@ class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
       title: title,
       body: body,
       label: label,
+      heading: heading,
     );
   }
 
