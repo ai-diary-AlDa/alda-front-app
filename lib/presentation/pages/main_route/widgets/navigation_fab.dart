@@ -26,7 +26,15 @@ class _NavigationFABState extends State<NavigationFAB> {
             Container(
               decoration: BoxDecoration(
                   color: AppColors.black02,
-                  borderRadius: BorderRadius.circular(15)),
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.black01,
+                      offset: Offset(0, 0),
+                      blurRadius: 5,
+                      spreadRadius: 0.1,
+                    )
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.all(5.0),
                 child: Stack(
@@ -116,7 +124,15 @@ class _NavigationFABState extends State<NavigationFAB> {
                 child: Container(
                   decoration: BoxDecoration(
                       color: AppColors.black02,
-                      borderRadius: BorderRadius.circular(15)),
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.black01,
+                          offset: Offset(0, 0),
+                          blurRadius: 5,
+                          spreadRadius: 0.1,
+                        )
+                      ]),
                   width: 60,
                   height: 60,
                   child: const Icon(
