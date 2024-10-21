@@ -1,6 +1,6 @@
-import 'package:alda_front/presentation/pages/home/widgets/diary_preview_card.dart';
-import 'package:alda_front/presentation/pages/home/widgets/list_view_shadow.dart';
-import 'package:alda_front/presentation/pages/home/widgets/month_indicator.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/diary_preview_card.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/list_view_shadow.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/month_indicator.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';

@@ -1,4 +1,4 @@
-import 'package:alda_front/presentation/pages/home/sections/diary_list.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/sections/diary_list.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/material.dart';

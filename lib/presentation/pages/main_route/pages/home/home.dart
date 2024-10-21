@@ -1,6 +1,6 @@
-import 'package:alda_front/presentation/pages/home/sections/diary_list.dart';
-import 'package:alda_front/presentation/pages/home/sections/greetings.dart';
-import 'package:alda_front/presentation/pages/home/sections/header.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/sections/diary_list.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/sections/greetings.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/sections/header.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';

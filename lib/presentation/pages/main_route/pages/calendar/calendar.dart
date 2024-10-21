@@ -1,5 +1,5 @@
-import 'package:alda_front/presentation/pages/calendar/sections/day_details_bottom_sheet.dart';
-import 'package:alda_front/presentation/pages/calendar/sections/calendar_section.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/sections/day_details_bottom_sheet.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/sections/calendar_section.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:auto_route/auto_route.dart';

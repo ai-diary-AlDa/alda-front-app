@@ -1,5 +1,5 @@
-import 'package:alda_front/presentation/pages/calendar/widgets/day_table.dart';
-import 'package:alda_front/presentation/pages/calendar/widgets/month_controller.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/widgets/day_table.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/widgets/month_controller.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/material.dart';
