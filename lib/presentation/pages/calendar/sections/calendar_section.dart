@@ -70,6 +70,7 @@ class _CalendarSectionState extends State<CalendarSection> {
               });
             },
             selectedYearMonth: _selectedYearMonth),
+        SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
               color: AppColors.white, borderRadius: BorderRadius.circular(30)),
@@ -94,7 +95,7 @@ class _CalendarSectionState extends State<CalendarSection> {
                   height: 8,
                 ),
                 SizedBox(
-                    height: 290,
+                    height: 300,
                     child: PageView.builder(
                       controller: _pageController,
                       itemBuilder: (BuildContext context, int index) =>
