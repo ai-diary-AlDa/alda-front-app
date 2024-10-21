@@ -25,6 +25,7 @@ class DiaryList extends StatelessWidget {
     return Expanded(
         child: Stack(alignment: Alignment.bottomCenter, children: [
       GroupedListView(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 130),
         elements: diaries,
         groupBy: (diary) => DateTime(diary.date.year, diary.date.month),
         itemBuilder: (context, element) => DiaryPreviewCard(diary: element),
