@@ -18,7 +18,7 @@ class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
   factory AppTextsTheme.main() {
     return const AppTextsTheme._internal(
       heading: TextStyle(
-          fontSize: 40, fontWeight: FontWeight.bold, fontFamily: 'NMFClassic'),
+          fontSize: 40, fontWeight: FontWeight.bold, fontFamily: 'YUniverse'),
       title: TextStyle(
           fontSize: 24,
           fontFamily: _defaultFamily,

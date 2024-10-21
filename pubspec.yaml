@@ -81,6 +81,9 @@ flutter:
     - family: NMFClassic
       fonts:
         - asset: assets/fonts/NMFClassic-Bold.otf
+    - family: YUniverse
+      fonts:
+        - asset: assets/fonts/YUniverse-B.otf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
