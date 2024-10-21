@@ -24,6 +24,7 @@ class MonthController extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         CupertinoButton(
+          padding: EdgeInsets.all(0),
           onPressed: onBackPressed,
           child: Icon(
             Icons.arrow_back_ios_new_outlined,
@@ -31,6 +32,7 @@ class MonthController extends StatelessWidget {
           ),
         ),
         CupertinoButton(
+          padding: EdgeInsets.all(0),
           onPressed: () {
             showCupertinoDialog(
               context: context,
@@ -57,6 +59,7 @@ class MonthController extends StatelessWidget {
                   .copyWith(color: AppColors.black01)),
         ),
         CupertinoButton(
+            padding: EdgeInsets.all(0),
             onPressed: onForwardPressed,
             child: Icon(
               Icons.arrow_forward_ios_outlined,
