@@ -11,8 +11,11 @@ class AppRouter extends RootStackRouter {
           AutoRoute(page: CalendarRoute.page, path: 'calendar'),
         ]),
         CustomRoute(
-            page: DiaryTopicSelectRoute.page,
-            path: '/diary-topic-select',
+            page: DiaryRoute.page,
+            path: '/diary',
+            children: [
+              AutoRoute(page: DiaryTopicSelectRoute.page, path: 'topic')
+            ],
             transitionsBuilder: TransitionsBuilders.slideBottom,
             durationInMilliseconds: 300,
             reverseDurationInMilliseconds: 300)

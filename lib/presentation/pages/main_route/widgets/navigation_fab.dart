@@ -119,7 +119,7 @@ class _NavigationFABState extends State<NavigationFAB> {
             ),
             GestureDetector(
                 onTap: () {
-                  context.router.push(DiaryTopicSelectRoute());
+                  context.router.push(DiaryRoute());
                 },
                 child: Container(
                   decoration: BoxDecoration(
