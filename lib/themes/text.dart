@@ -19,13 +19,9 @@ class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
     return const AppTextsTheme._internal(
       heading: TextStyle(
           fontSize: 40, fontWeight: FontWeight.bold, fontFamily: 'YUniverse'),
-      title: TextStyle(
-          fontSize: 24,
-          fontFamily: _defaultFamily,
-          fontWeight: FontWeight.bold),
+      title: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       body: TextStyle(fontSize: 16, fontFamily: _defaultFamily),
-      label: TextStyle(
-          fontSize: 14, fontFamily: _defaultFamily, color: AppColors.black02),
+      label: TextStyle(fontSize: 14, color: AppColors.black02),
     );
   }
 
