@@ -22,6 +22,7 @@ import 'package:alda_front/presentation/pages/main_route/pages/home/home.dart'
     as _i5;
 import 'package:alda_front/presentation/pages/splash/splash.dart' as _i7;
 import 'package:auto_route/auto_route.dart' as _i8;
+import 'package:flutter/cupertino.dart' as _i9;
 
 /// generated route for
 /// [_i1.CalendarPage]
@@ -43,22 +44,38 @@ class CalendarRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.DiaryEdit]
-class DiaryEdit extends _i8.PageRouteInfo<void> {
-  const DiaryEdit({List<_i8.PageRouteInfo>? children})
-      : super(
-          DiaryEdit.name,
+/// [_i2.DiaryEditPage]
+class DiaryEditRoute extends _i8.PageRouteInfo<DiaryEditRouteArgs> {
+  DiaryEditRoute({
+    _i9.Key? key,
+    List<_i8.PageRouteInfo>? children,
+  }) : super(
+          DiaryEditRoute.name,
+          args: DiaryEditRouteArgs(key: key),
           initialChildren: children,
         );
 
-  static const String name = 'DiaryEdit';
+  static const String name = 'DiaryEditRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i2.DiaryEdit();
+      final args = data.argsAs<DiaryEditRouteArgs>(
+          orElse: () => const DiaryEditRouteArgs());
+      return _i2.DiaryEditPage(key: args.key);
     },
   );
+}
+
+class DiaryEditRouteArgs {
+  const DiaryEditRouteArgs({this.key});
+
+  final _i9.Key? key;
+
+  @override
+  String toString() {
+    return 'DiaryEditRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

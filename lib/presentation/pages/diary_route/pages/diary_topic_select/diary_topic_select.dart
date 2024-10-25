@@ -1,3 +1,4 @@
+import 'package:alda_front/presentation/navigation/navigation.gr.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:auto_route/auto_route.dart';
@@ -32,7 +33,7 @@ class DiaryTopicSelectPage extends StatelessWidget {
                               size: 28,
                             ),
                             onPressed: () {
-                              context.router.back();
+                              context.tabsRouter.maybePop();
                             }),
                       ],
                     ),
@@ -57,7 +58,9 @@ class DiaryTopicSelectPage extends StatelessWidget {
                 ),
                 child: Center(
                   child: CupertinoButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      context.tabsRouter.navigate(DiaryEditRoute());
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

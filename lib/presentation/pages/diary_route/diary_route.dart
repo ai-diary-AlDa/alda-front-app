@@ -9,7 +9,7 @@ class DiaryRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsRouter(
-      routes: [DiaryTopicSelectRoute()],
+      routes: [DiaryTopicSelectRoute(), DiaryEditRoute()],
     );
   }
 }
