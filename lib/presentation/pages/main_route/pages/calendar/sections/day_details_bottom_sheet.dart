@@ -1,7 +1,10 @@
 import 'package:alda_front/presentation/common/widgets/animated_gradient_border.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/bloc/calendar_bloc.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class DayDetailsBottomSheet extends StatefulWidget {
   const DayDetailsBottomSheet({
@@ -75,11 +78,16 @@ class _DayDetailsBottomSheetState extends State<DayDetailsBottomSheet> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("8월 10일",
-                              style: Theme.of(context)
-                                  .appTexts
-                                  .heading
-                                  .copyWith(color: AppColors.white)),
+                          BlocBuilder<CalendarBloc, CalendarState>(
+                            buildWhen: (previous, current) =>
+                                previous.selectedDate != current.selectedDate,
+                            builder: (context, state) => Text(
+                                DateFormat("M월 dd일").format(state.selectedDate),
+                                style: Theme.of(context)
+                                    .appTexts
+                                    .heading
+                                    .copyWith(color: AppColors.white)),
+                          ),
                           AnimatedGradientBorder()
                         ],
                       ),

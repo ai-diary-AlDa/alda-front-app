@@ -1,8 +1,10 @@
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/bloc/calendar_bloc.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/calendar/widgets/day_table.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/calendar/widgets/month_controller.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CalendarSection extends StatefulWidget {
   const CalendarSection({
@@ -14,20 +16,11 @@ class CalendarSection extends StatefulWidget {
 }
 
 class _CalendarSectionState extends State<CalendarSection> {
-  late List<DateTime> _calendarPages;
-  late DateTime _selectedYearMonth;
   final _pageController = PageController(initialPage: 1);
 
   @override
   void initState() {
     super.initState();
-    DateTime today = DateTime.now();
-    _calendarPages = [
-      DateTime(today.year, today.month - 1),
-      DateTime(today.year, today.month),
-      DateTime(today.year, today.month + 1)
-    ];
-    _selectedYearMonth = _calendarPages.elementAt(1);
     _pageController.addListener(() {
       final index = _pageController.page! > 1
           ? _pageController.page!.floor()
@@ -49,27 +42,15 @@ class _CalendarSectionState extends State<CalendarSection> {
     return Column(
       children: [
         MonthController(
-            onBackPressed: () {
-              _pageController.previousPage(
-                  duration: Duration(milliseconds: 350),
-                  curve: Curves.easeInOut);
-            },
-            onForwardPressed: () {
-              _pageController.nextPage(
-                  duration: Duration(milliseconds: 350),
-                  curve: Curves.easeInOut);
-            },
-            onPickerDateTimeChanged: (DateTime dateTime) {
-              setState(() {
-                _calendarPages = [
-                  DateTime(dateTime.year, dateTime.month - 1),
-                  dateTime,
-                  DateTime(dateTime.year, dateTime.month + 1)
-                ];
-                _selectedYearMonth = _calendarPages[1];
-              });
-            },
-            selectedYearMonth: _selectedYearMonth),
+          onBackPressed: () {
+            _pageController.previousPage(
+                duration: Duration(milliseconds: 350), curve: Curves.easeInOut);
+          },
+          onForwardPressed: () {
+            _pageController.nextPage(
+                duration: Duration(milliseconds: 350), curve: Curves.easeInOut);
+          },
+        ),
         SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
@@ -94,13 +75,17 @@ class _CalendarSectionState extends State<CalendarSection> {
                 SizedBox(
                   height: 8,
                 ),
-                SizedBox(
-                    height: 300,
-                    child: PageView.builder(
-                      controller: _pageController,
-                      itemBuilder: (BuildContext context, int index) =>
-                          DayTable(currentDate: _calendarPages[index]),
-                    )),
+                BlocBuilder<CalendarBloc, CalendarState>(
+                  buildWhen: (previous, current) =>
+                      previous.calendarPages != current.calendarPages,
+                  builder: (context, state) => SizedBox(
+                      height: 300,
+                      child: PageView.builder(
+                        controller: _pageController,
+                        itemBuilder: (BuildContext context, int index) =>
+                            DayTable(currentDate: state.calendarPages[index]),
+                      )),
+                ),
               ],
             ),
           ),
@@ -110,24 +95,18 @@ class _CalendarSectionState extends State<CalendarSection> {
   }
 
   void _prev() {
-    setState(() {
-      _calendarPages
-        ..insert(0,
-            DateTime(_calendarPages.first.year, _calendarPages.first.month - 1))
-        ..removeLast();
-      _selectedYearMonth = _calendarPages[1];
-    });
+    final selectedYearMonth =
+        context.read<CalendarBloc>().state.selectedYearMonth;
+    context.read<CalendarBloc>().add(SelectedYearMonthChanged(
+        DateTime(selectedYearMonth.year, selectedYearMonth.month - 1)));
     _pageController.jumpToPage(1);
   }
 
   void _next() {
-    setState(() {
-      _calendarPages
-        ..removeAt(0)
-        ..insert(2,
-            DateTime(_calendarPages.last.year, _calendarPages.last.month + 1));
-      _selectedYearMonth = _calendarPages[1];
-    });
+    final selectedYearMonth =
+        context.read<CalendarBloc>().state.selectedYearMonth;
+    context.read<CalendarBloc>().add(SelectedYearMonthChanged(
+        DateTime(selectedYearMonth.year, selectedYearMonth.month + 1)));
     _pageController.jumpToPage(1);
   }
 }

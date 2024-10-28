@@ -1,21 +1,17 @@
+import 'package:alda_front/presentation/pages/main_route/pages/calendar/bloc/calendar_bloc.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
 class MonthController extends StatelessWidget {
   final VoidCallback onBackPressed;
   final VoidCallback onForwardPressed;
-  final void Function(DateTime) onPickerDateTimeChanged;
-  final DateTime selectedYearMonth;
 
   const MonthController(
-      {super.key,
-      required this.onBackPressed,
-      required this.onForwardPressed,
-      required this.onPickerDateTimeChanged,
-      required this.selectedYearMonth});
+      {super.key, required this.onBackPressed, required this.onForwardPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -31,32 +27,38 @@ class MonthController extends StatelessWidget {
             color: AppColors.black01,
           ),
         ),
-        CupertinoButton(
-          padding: EdgeInsets.all(0),
-          onPressed: () {
-            showCupertinoDialog(
-              context: context,
-              barrierDismissible: true,
-              builder: (BuildContext context) {
-                return Align(
+        BlocBuilder<CalendarBloc, CalendarState>(
+          buildWhen: (previous, current) =>
+              previous.selectedYearMonth != current.selectedYearMonth,
+          builder: (context, state) => CupertinoButton(
+            padding: EdgeInsets.all(0),
+            onPressed: () {
+              showCupertinoDialog(
+                context: context,
+                barrierDismissible: true,
+                builder: (innerContext) => Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     color: Colors.white,
                     height: 300,
                     child: CupertinoDatePicker(
-                        initialDateTime: selectedYearMonth,
+                        initialDateTime: state.selectedYearMonth,
                         mode: CupertinoDatePickerMode.monthYear,
-                        onDateTimeChanged: onPickerDateTimeChanged),
+                        onDateTimeChanged: (dateTime) {
+                          context
+                              .read<CalendarBloc>()
+                              .add(SelectedYearMonthChanged(dateTime));
+                        }),
                   ),
-                );
-              },
-            );
-          },
-          child: Text(DateFormat("yyyy년 MM월").format(selectedYearMonth),
-              style: Theme.of(context)
-                  .appTexts
-                  .title
-                  .copyWith(color: AppColors.black01)),
+                ),
+              );
+            },
+            child: Text(DateFormat("yyyy년 MM월").format(state.selectedYearMonth),
+                style: Theme.of(context)
+                    .appTexts
+                    .title
+                    .copyWith(color: AppColors.black01)),
+          ),
         ),
         CupertinoButton(
             padding: EdgeInsets.all(0),
