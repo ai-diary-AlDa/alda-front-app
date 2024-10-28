@@ -10,7 +10,8 @@ class Button extends StatelessWidget {
       required this.onPressed,
       this.padding,
       this.borderRadius = const BorderRadius.all(Radius.circular(8)),
-      this.pressedOpacity = 0.4})
+      this.pressedOpacity = 0.4,
+      this.disabledColor = CupertinoColors.quaternarySystemFill})
       : backgroundColor = null,
         minSize = 0;
 
@@ -22,15 +23,17 @@ class Button extends StatelessWidget {
       this.minSize,
       this.padding,
       this.borderRadius = const BorderRadius.all(Radius.zero),
-      this.pressedOpacity = 0.4});
+      this.pressedOpacity = 0.4,
+      this.disabledColor = CupertinoColors.quaternarySystemFill});
 
   final Widget child;
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final EdgeInsetsGeometry? padding;
   final Color? backgroundColor;
   final double? minSize;
   final BorderRadius? borderRadius;
   final double pressedOpacity;
+  final Color disabledColor;
 
   @override
   Widget build(BuildContext context) {
