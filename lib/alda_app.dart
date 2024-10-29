@@ -11,6 +11,7 @@ class AlDaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(),
       theme: ThemeData(fontFamily: 'Pretendard').copyWith(
         splashFactory: NoSplash.splashFactory,

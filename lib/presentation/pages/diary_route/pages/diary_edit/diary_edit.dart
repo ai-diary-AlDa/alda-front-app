@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:alda_front/presentation/common/widgets/button.dart';
@@ -168,7 +169,11 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                                 pressedOpacity: 0.9,
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  backToTopicSelect();
+                                  scheduleMicrotask(() async {
+                                    await Future.delayed(
+                                        const Duration(milliseconds: 500));
+                                    backToTopicSelect();
+                                  });
                                 },
                                 child: Text(
                                   "삭제",
