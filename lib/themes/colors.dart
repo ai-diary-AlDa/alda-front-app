@@ -52,4 +52,5 @@ class AppColors {
   static const Color pink = Color(0xFFFFD7D7);
   static const Color skyblue = Color(0xFFF6EBFB);
   static const Color lightGray = Color(0xFFE5E5E5);
+  static Color gray = Colors.grey.shade600;
 }

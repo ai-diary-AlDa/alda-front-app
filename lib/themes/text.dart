@@ -2,8 +2,6 @@ import 'package:alda_front/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
-  static const _defaultFamily = 'Pretendard';
-
   final TextStyle heading;
   final TextStyle title;
   final TextStyle body;
@@ -19,9 +17,10 @@ class AppTextsTheme extends ThemeExtension<AppTextsTheme> {
     return const AppTextsTheme._internal(
       heading: TextStyle(
           fontSize: 40, fontWeight: FontWeight.bold, fontFamily: 'YUniverse'),
-      title: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-      body: TextStyle(fontSize: 16, fontFamily: _defaultFamily),
-      label: TextStyle(fontSize: 14, color: AppColors.black02),
+      title: TextStyle(
+          fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.black01),
+      body: TextStyle(fontSize: 16, color: AppColors.black01),
+      label: TextStyle(fontSize: 14, color: AppColors.black01),
     );
   }
 
