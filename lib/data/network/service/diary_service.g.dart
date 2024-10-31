@@ -24,14 +24,10 @@ class _DiaryService implements DiaryService {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<CommonResponse<DiaryPreviewListResponse>> getMyDiaries(
-      String token) async {
+  Future<CommonResponse<DiaryPreviewListResponse>> getMyDiaries() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'authorization': 'true',
-      r'Authorization': token,
-    };
+    final _headers = <String, dynamic>{r'authorization': 'true'};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =

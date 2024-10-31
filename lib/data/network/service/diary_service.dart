@@ -12,6 +12,5 @@ abstract class DiaryService {
 
   @GET("/me")
   @http.Headers({'authorization': 'true'})
-  Future<CommonResponse<DiaryPreviewListResponse>> getMyDiaries(
-      @Header("Authorization") String token);
+  Future<CommonResponse<DiaryPreviewListResponse>> getMyDiaries();
 }
