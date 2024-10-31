@@ -28,41 +28,50 @@ class DayTable extends StatelessWidget {
                               : null,
                           child: BlocBuilder<CalendarBloc, CalendarState>(
                             buildWhen: (previous, current) =>
-                                previous.today != current.today,
-                            builder: (context, state) => Container(
-                              width: 45,
-                              height: 45,
-                              decoration: BoxDecoration(
-                                  color: day.month == currentDate.month
-                                      ? AppColors.beige
-                                      : Colors.transparent,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(9999)),
-                                  border: Border.all(
-                                      color: state.today == day &&
-                                              day.month == currentDate.month
-                                          ? Color(0xFFBCA37E)
-                                          : AppColors.beige,
-                                      width: 2)),
-                              child: Center(
-                                  child: day.month == currentDate.month
-                                      ? (day.day % 3 == 0
-                                          ? Text(
-                                              "${day.day}",
-                                              style: Theme.of(context)
-                                                  .appTexts
-                                                  .label
-                                                  .copyWith(
-                                                      color: Color(0xFFBCA37E),
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                            )
-                                          : Text(
-                                              "😀",
-                                              style: TextStyle(fontSize: 32),
-                                            ))
-                                      : null),
-                            ),
+                                previous.today != current.today ||
+                                previous.selectedDate != current.selectedDate,
+                            builder: (context, state) {
+                              var borderColor = AppColors.beige;
+                              if (state.today == day &&
+                                  day.month == currentDate.month) {
+                                borderColor = Color(0xFFBCA37E);
+                              } else if (state.selectedDate == day &&
+                                  day.month == currentDate.month) {
+                                borderColor = AppColors.gray;
+                              }
+
+                              return Container(
+                                width: 45,
+                                height: 45,
+                                decoration: BoxDecoration(
+                                    color: day.month == currentDate.month
+                                        ? AppColors.beige
+                                        : Colors.transparent,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(9999)),
+                                    border: Border.all(
+                                        color: borderColor, width: 2)),
+                                child: Center(
+                                    child: day.month == currentDate.month
+                                        ? (day.day % 3 == 0
+                                            ? Text(
+                                                "${day.day}",
+                                                style: Theme.of(context)
+                                                    .appTexts
+                                                    .label
+                                                    .copyWith(
+                                                        color:
+                                                            Color(0xFFBCA37E),
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                              )
+                                            : Text(
+                                                "😀",
+                                                style: TextStyle(fontSize: 32),
+                                              ))
+                                        : null),
+                              );
+                            },
                           ),
                         ))
                     .toList(),
