@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-const String ACCESS_TOKEN_KEY = 'acessToken';
+const String kAccessTokenKey = 'acessToken';
 
 class AuthTokenDioInterceptor extends Interceptor {
   final FlutterSecureStorage storage;
