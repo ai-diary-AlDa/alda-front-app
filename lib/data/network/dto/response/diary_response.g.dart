@@ -1,5 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: unused_element
+
 part of 'diary_response.dart';
 
 // **************************************************************************
@@ -24,18 +26,28 @@ DiaryPreviewResponse _$DiaryPreviewResponseFromJson(
         Map<String, dynamic> json) =>
     DiaryPreviewResponse(
       json['id'] as String,
-      json['entryDate'] as String,
+      DateTime.parse(json['entryDate'] as String),
       json['title'] as String,
       json['contents'] as String,
-      json['primaryEmotion'] as String,
+      $enumDecode(_$EmotionEnumMap, json['primaryEmotion']),
     );
 
 Map<String, dynamic> _$DiaryPreviewResponseToJson(
         DiaryPreviewResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'entryDate': instance.entryDate,
+      'entryDate': instance.entryDate.toIso8601String(),
       'title': instance.title,
       'contents': instance.contents,
-      'primaryEmotion': instance.primaryEmotion,
+      'primaryEmotion': _$EmotionEnumMap[instance.primaryEmotion]!,
     };
+
+const _$EmotionEnumMap = {
+  Emotion.happy: 0,
+  Emotion.sad: 1,
+  Emotion.angry: 2,
+  Emotion.fear: 3,
+  Emotion.surprise: 4,
+  Emotion.disgust: 5,
+  Emotion.neutral: 6,
+};

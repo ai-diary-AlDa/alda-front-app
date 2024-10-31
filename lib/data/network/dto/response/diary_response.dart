@@ -1,3 +1,4 @@
+import 'package:alda_front/domain/model/emotion.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'diary_response.g.dart';
@@ -19,7 +20,7 @@ class DiaryPreviewResponse {
   String id;
 
   @JsonKey(name: "entryDate")
-  String entryDate;
+  DateTime entryDate;
 
   @JsonKey(name: "title")
   String title;
@@ -28,7 +29,7 @@ class DiaryPreviewResponse {
   String contents;
 
   @JsonKey(name: "primaryEmotion")
-  String primaryEmotion;
+  Emotion primaryEmotion;
 
   DiaryPreviewResponse(
       this.id, this.entryDate, this.title, this.contents, this.primaryEmotion);
