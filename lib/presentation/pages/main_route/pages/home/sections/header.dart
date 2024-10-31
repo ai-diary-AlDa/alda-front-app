@@ -1,3 +1,4 @@
+import 'package:alda_front/presentation/common/widgets/button.dart';
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
@@ -16,16 +17,19 @@ class Header extends StatelessWidget {
         ),
         Row(
           children: [
-            IconButton(
+            Button(
                 onPressed: () {},
-                icon: const Icon(
+                child: const Icon(
                   Icons.search,
                   color: Colors.black,
                   size: 32,
                 )),
-            IconButton(
+            SizedBox(
+              width: 8,
+            ),
+            Button(
                 onPressed: () {},
-                icon: const Icon(Icons.menu, color: Colors.black, size: 32))
+                child: const Icon(Icons.menu, color: Colors.black, size: 32))
           ],
         )
       ],

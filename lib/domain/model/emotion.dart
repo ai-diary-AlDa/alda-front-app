@@ -1,17 +1,17 @@
 import 'package:json_annotation/json_annotation.dart';
 
-@JsonEnum(valueField: 'code')
+@JsonEnum(valueField: 'value')
 enum Emotion {
-  happy(0, '😄'),
-  sad(1, '😢'),
-  angry(2, '😡'),
-  fear(3, '😨'),
-  surprise(4, '😲'),
-  disgust(5, '🤢'),
-  neutral(6, '😐');
+  happy("HAPPY", '😄'),
+  sad("SAD", '😢'),
+  angry("ANGRY", '😡'),
+  fear("FEAR", '😨'),
+  surprise("SURPRISE", '😲'),
+  disgust("DISGUST", '🤢'),
+  neutral("NEUTRAL", '😐');
 
-  final int code;
+  final String value;
   final String emoji;
 
-  const Emotion(this.code, this.emoji);
+  const Emotion(this.value, this.emoji);
 }

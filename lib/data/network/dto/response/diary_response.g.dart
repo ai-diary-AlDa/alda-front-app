@@ -43,11 +43,11 @@ Map<String, dynamic> _$DiaryPreviewResponseToJson(
     };
 
 const _$EmotionEnumMap = {
-  Emotion.happy: 0,
-  Emotion.sad: 1,
-  Emotion.angry: 2,
-  Emotion.fear: 3,
-  Emotion.surprise: 4,
-  Emotion.disgust: 5,
-  Emotion.neutral: 6,
+  Emotion.happy: 'HAPPY',
+  Emotion.sad: 'SAD',
+  Emotion.angry: 'ANGRY',
+  Emotion.fear: 'FEAR',
+  Emotion.surprise: 'SURPRISE',
+  Emotion.disgust: 'DISGUST',
+  Emotion.neutral: 'NEUTRAL',
 };
