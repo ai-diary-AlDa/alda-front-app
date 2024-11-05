@@ -10,7 +10,8 @@ class AppRouter extends RootStackRouter {
             page: MainRoute.page,
             path: "/main",
             children: [
-              AutoRoute(page: HomeRoute.page, path: 'home'),
+              AutoRoute(
+                  page: HomeRoute.page, path: 'home', maintainState: false),
               AutoRoute(page: CalendarRoute.page, path: 'calendar'),
             ],
             transitionsBuilder: TransitionsBuilders.fadeIn,
