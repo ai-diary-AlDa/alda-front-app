@@ -108,54 +108,47 @@ class _DiaryListSectionState extends State<DiaryListSection> {
                     ],
                   );
                 } else {
-                  return RefreshIndicator(
-                      onRefresh: () {
-                        context
-                            .read<DiaryPreviewListBloc>()
-                            .add(LoadDiaryPreviewListEvent());
-                        return Future.value();
-                      },
-                      child: RefreshIndicator.adaptive(
-                        onRefresh: () => _onRefresh(context),
-                        child: LayoutBuilder(builder: (contex, constraints) {
-                          return SingleChildScrollView(
-                            physics: AlwaysScrollableScrollPhysics(),
-                            child: SizedBox(
-                              height: constraints.maxHeight,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 160.0),
-                                child: Center(
-                                    child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/images/error.svg",
-                                      width: 150,
-                                      height: 150,
-                                    ),
-                                    SizedBox(height: 32),
-                                    Text(
-                                      "일기를 불러오지 못했어요...",
-                                      style: Theme.of(context)
-                                          .appTexts
-                                          .title
-                                          .copyWith(
-                                            color: AppColors.black02,
-                                          ),
-                                    ),
-                                    SizedBox(height: 16),
-                                    Text(
-                                      "내부 오류로 조회에 실패했어요!\n잠시 후 다시 시도해주세요.",
-                                      style: Theme.of(context).appTexts.body,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                )),
+                  return RefreshIndicator.adaptive(onRefresh: () {
+                    context
+                        .read<DiaryPreviewListBloc>()
+                        .add(LoadDiaryPreviewListEvent());
+                    return Future.value();
+                  }, child: LayoutBuilder(builder: (contex, constraints) {
+                    return SingleChildScrollView(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: SizedBox(
+                        height: constraints.maxHeight,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 160.0),
+                          child: Center(
+                              child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                "assets/images/error.svg",
+                                width: 150,
+                                height: 150,
                               ),
-                            ),
-                          );
-                        }),
-                      ));
+                              SizedBox(height: 32),
+                              Text(
+                                "일기를 불러오지 못했어요...",
+                                style:
+                                    Theme.of(context).appTexts.title.copyWith(
+                                          color: AppColors.black02,
+                                        ),
+                              ),
+                              SizedBox(height: 16),
+                              Text(
+                                "내부 오류로 조회에 실패했어요!\n잠시 후 다시 시도해주세요.",
+                                style: Theme.of(context).appTexts.body,
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )),
+                        ),
+                      ),
+                    );
+                  }));
                 }
               }),
         ));
