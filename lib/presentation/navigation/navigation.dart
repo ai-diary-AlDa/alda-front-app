@@ -21,7 +21,8 @@ class AppRouter extends RootStackRouter {
             path: '/diary',
             children: [
               CustomRoute(page: DiaryTopicSelectRoute.page, path: 'topic'),
-              CustomRoute(page: DiaryEditRoute.page, path: 'edit')
+              CustomRoute(
+                  page: DiaryEditRoute.page, path: 'edit', maintainState: false)
             ],
             transitionsBuilder: TransitionsBuilders.slideBottom,
             durationInMilliseconds: 300,
