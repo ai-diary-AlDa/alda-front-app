@@ -11,9 +11,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
 
-class DiaryList extends StatelessWidget {
-  const DiaryList({super.key});
+class DiaryListSection extends StatefulWidget {
+  const DiaryListSection({super.key});
 
+  @override
+  State<DiaryListSection> createState() => _DiaryListSectionState();
+}
+
+class _DiaryListSectionState extends State<DiaryListSection> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DiaryPreviewListBloc>(
@@ -94,7 +99,7 @@ class DiaryList extends StatelessWidget {
                             diaries: state.diaries!,
                           ),
                           stickyHeaderBackgroundColor: AppColors.white,
-                          useStickyGroupSeparators: true,
+                          // useStickyGroupSeparators: true,
                           separator: SizedBox(height: 16),
                           order: GroupedListOrder.DESC,
                         ),

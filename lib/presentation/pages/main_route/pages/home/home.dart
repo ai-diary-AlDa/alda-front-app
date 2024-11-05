@@ -1,4 +1,4 @@
-import 'package:alda_front/presentation/pages/main_route/pages/home/sections/diary_list.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/home/sections/diary_list_section.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/home/sections/greetings.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/home/sections/header.dart';
 import 'package:alda_front/themes/colors.dart';
@@ -25,7 +25,7 @@ class HomePage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 16),
                   child: Greetings(),
                 ),
-                DiaryList()
+                DiaryListSection()
               ],
             ),
           ),
