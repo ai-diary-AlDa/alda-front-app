@@ -1,3 +1,4 @@
+import 'package:alda_front/presentation/common/widgets/app_text_field.dart';
 import 'package:alda_front/presentation/common/widgets/button.dart';
 import 'package:alda_front/presentation/pages/diary_route/pages/diary_edit/widgets/quill_toolbar_select_heading_buttons.dart';
 import 'package:alda_front/themes/colors.dart';
@@ -6,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility_temp_fork/flutter_keyboard_visibility_temp_fork.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 
 final kToggleButtonOptions = QuillToolbarToggleStyleButtonOptions(
     iconTheme: QuillIconTheme(
@@ -93,6 +95,15 @@ class DiaryEditorToolbar extends StatelessWidget {
                             ),
                             QuillToolbarInsertLinkButton(
                                 controller: editorController),
+                            QuillToolbarCameraButton(
+                              controller: editorController,
+                              options: QuillToolbarCameraButtonOptions(
+                                afterButtonPressed: () =>
+                                    editorController.editorFocusNode?.unfocus(),
+                              ),
+                            ),
+                            QuillToolbarImageButton(
+                                controller: editorController),
                             SizedBox(
                               width: 40,
                             )
@@ -122,7 +133,9 @@ class DiaryEditorToolbar extends StatelessWidget {
                               color: AppColors.black02,
                             ),
                             onPressed: () {
-                              FocusManager.instance.primaryFocus?.unfocus();
+                              // FocusManager.instance.primaryFocus?.unfocus();
+                              // log(editorFocusNode.nextFocus().toString());
+                              editorController.editorFocusNode?.unfocus();
                             },
                           ),
                         ],
@@ -294,76 +307,5 @@ class _InsertLinkDialogState extends State<InsertLinkDialog> {
         ]),
       ),
     );
-  }
-}
-
-class AppTextField extends StatefulWidget {
-  const AppTextField({
-    super.key,
-    this.focusNode,
-    this.controller,
-    required this.placeholder,
-    this.keyboardType = TextInputType.text,
-    this.backgroundColor = const Color(0xFFF5F5F5),
-    this.borderColor = const Color(0xFF007AFF),
-    this.textAlign = TextAlign.start,
-    this.textStyle,
-    this.placeholderStyle,
-    this.onEditingComplete,
-  });
-
-  final FocusNode? focusNode;
-  final TextEditingController? controller;
-  final String placeholder;
-  final TextInputType? keyboardType;
-  final Color backgroundColor;
-  final Color borderColor;
-  final TextAlign textAlign;
-  final TextStyle? textStyle;
-  final TextStyle? placeholderStyle;
-  final void Function()? onEditingComplete;
-
-  @override
-  State<AppTextField> createState() => _AppTextFieldState();
-}
-
-class _AppTextFieldState extends State<AppTextField> {
-  late final FocusNode focusNode;
-  late final TextEditingController controller;
-
-  @override
-  void initState() {
-    focusNode = widget.focusNode ?? FocusNode();
-    focusNode.addListener(() {
-      setState(() {});
-    });
-
-    controller = widget.controller ?? TextEditingController();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoTextField(
-        onEditingComplete: widget.onEditingComplete,
-        style: widget.textStyle,
-        textAlign: widget.textAlign,
-        keyboardType: widget.keyboardType,
-        focusNode: focusNode,
-        decoration: BoxDecoration(
-          border: !focusNode.hasFocus
-              ? Border.all(color: Colors.transparent)
-              : Border.all(color: widget.borderColor),
-          borderRadius: BorderRadius.circular(8),
-          color: widget.backgroundColor,
-        ),
-        placeholder: widget.placeholder,
-        placeholderStyle: widget.placeholderStyle ??
-            Theme.of(context)
-                .appTexts
-                .body
-                .copyWith(color: AppColors.gray, fontWeight: FontWeight.normal),
-        padding: EdgeInsets.all(12),
-        controller: controller);
   }
 }

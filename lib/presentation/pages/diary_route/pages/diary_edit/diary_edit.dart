@@ -27,9 +27,18 @@ class DiaryEditPage extends StatefulWidget {
 }
 
 class _DiaryEditPageState extends State<DiaryEditPage> {
-  final _editorController = QuillController.basic();
-  final _scrollController = ScrollController();
-  final _deltaToMdConverter = DeltaToMarkdown();
+  late final QuillController _editorController;
+  late final ScrollController _scrollController;
+  late final DeltaToMarkdown _deltaToMdConverter;
+
+  @override
+  void initState() {
+    super.initState();
+    _editorController = QuillController.basic(
+        editorFocusNode: FocusNode(debugLabel: "DiaryEditor"));
+    _scrollController = ScrollController();
+    _deltaToMdConverter = DeltaToMarkdown();
+  }
 
   @override
   void dispose() {
@@ -57,7 +66,6 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                   onPressedSave: () {
                     log(_deltaToMdConverter
                         .convert(_editorController.document.toDelta()));
-
                     Fluttertoast.showToast(
                       msg: '일기를 저장했어요.',
                       timeInSecForIosWeb: 2,

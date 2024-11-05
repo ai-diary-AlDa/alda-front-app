@@ -1,4 +1,4 @@
-import 'package:alda_front/presentation/pages/diary_route/pages/diary_edit/widgets/diary_editor_toolbar.dart';
+import 'package:alda_front/presentation/common/widgets/app_text_field.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:flutter/material.dart';
