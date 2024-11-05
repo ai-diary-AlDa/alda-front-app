@@ -15,6 +15,8 @@ import '../data/network/service/diary_service.dart' as _i271;
 import '../data/repository/diary_repository.dart' as _i787;
 import '../data/repository/impl/diary_repository_impl.dart' as _i521;
 import '../domain/usecase/load_diary_preview_list_usecase.dart' as _i813;
+import '../presentation/pages/diary_route/pages/diary_edit/bloc/diary_edit_bloc.dart'
+    as _i1000;
 import '../presentation/pages/main_route/pages/calendar/bloc/calendar_bloc.dart'
     as _i820;
 import '../presentation/pages/main_route/pages/home/bloc/diary_preview_list_bloc.dart'
@@ -31,6 +33,7 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
+  gh.factory<_i1000.DiaryEditBloc>(() => _i1000.DiaryEditBloc());
   gh.factory<_i820.CalendarBloc>(() => _i820.CalendarBloc());
   gh.lazySingleton<_i787.DiaryRepository>(
       () => _i521.DiaryRepositoryImpl(diaryService: gh<_i271.DiaryService>()));
