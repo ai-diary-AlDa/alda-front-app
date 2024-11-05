@@ -38,7 +38,7 @@ class _DiaryService implements DiaryService {
     )
             .compose(
               _dio.options,
-              '/me',
+              '',
               queryParameters: queryParameters,
               data: _data,
             )

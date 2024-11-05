@@ -10,7 +10,7 @@ part 'diary_service.g.dart';
 abstract class DiaryService {
   factory DiaryService(Dio dio, {String baseUrl}) = _DiaryService;
 
-  @GET("/me")
+  @GET("")
   @http.Headers({'authorization': 'true'})
   Future<CommonResponse<DiaryPreviewListResponse>> getMyDiaries();
 }
