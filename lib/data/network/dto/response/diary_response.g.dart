@@ -49,3 +49,33 @@ const _$EmotionEnumMap = {
   Emotion.disgust: 'DISGUST',
   Emotion.neutral: 'NEUTRAL',
 };
+
+DiaryFeedbackResponse _$DiaryFeedbackResponseFromJson(
+        Map<String, dynamic> json) =>
+    DiaryFeedbackResponse(
+      (json['startIndex'] as num).toInt(),
+      (json['endIndex'] as num).toInt(),
+      json['feedback'] as String,
+    );
+
+Map<String, dynamic> _$DiaryFeedbackResponseToJson(
+        DiaryFeedbackResponse instance) =>
+    <String, dynamic>{
+      'startIndex': instance.startIndex,
+      'endIndex': instance.endIndex,
+      'feedback': instance.feedback,
+    };
+
+DiaryFeedbackListResponse _$DiaryFeedbackListResponseFromJson(
+        Map<String, dynamic> json) =>
+    DiaryFeedbackListResponse(
+      (json['feedbacks'] as List<dynamic>)
+          .map((e) => DiaryFeedbackResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DiaryFeedbackListResponseToJson(
+        DiaryFeedbackListResponse instance) =>
+    <String, dynamic>{
+      'feedbacks': instance.feedbacks,
+    };

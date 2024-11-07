@@ -16,6 +16,7 @@ import '../data/repository/diary_repository.dart' as _i787;
 import '../data/repository/impl/diary_repository_impl.dart' as _i521;
 import '../data/repository/impl/temp_diary_repository_impl.dart' as _i263;
 import '../data/repository/temp_diary_repository.dart' as _i847;
+import '../domain/usecase/load_diary_feedbacks_usecase.dart' as _i105;
 import '../domain/usecase/load_diary_preview_list_usecase.dart' as _i813;
 import '../domain/usecase/load_temp_dairy_preview_list_usecase.dart' as _i229;
 import '../presentation/pages/diary_route/pages/diary_edit/bloc/diary_edit_bloc.dart'
@@ -48,6 +49,8 @@ _i174.GetIt $initGetIt(
       _i229.LoadTempDairyPreviewListUsecase(gh<_i847.TempDiaryRepository>()));
   gh.factory<_i813.LoadDiaryPreviewListUsecase>(
       () => _i813.LoadDiaryPreviewListUsecase(gh<_i787.DiaryRepository>()));
+  gh.factory<_i105.LoadDiaryFeedbacksUsecase>(
+      () => _i105.LoadDiaryFeedbacksUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i634.DiaryTopicSelectBloc>(() =>
       _i634.DiaryTopicSelectBloc(gh<_i229.LoadTempDairyPreviewListUsecase>()));
   gh.factory<_i171.DiaryPreviewListBloc>(() =>

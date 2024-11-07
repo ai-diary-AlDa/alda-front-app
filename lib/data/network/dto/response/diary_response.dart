@@ -10,8 +10,7 @@ class DiaryPreviewListResponse {
 
   DiaryPreviewListResponse(this.diaries);
 
-  factory DiaryPreviewListResponse.fromJson(Map<String, dynamic> json) =>
-      _$DiaryPreviewListResponseFromJson(json);
+  factory DiaryPreviewListResponse.fromJson(Map<String, dynamic> json) => _$DiaryPreviewListResponseFromJson(json);
 }
 
 @JsonSerializable()
@@ -31,9 +30,27 @@ class DiaryPreviewResponse {
   @JsonKey(name: "primaryEmotion")
   Emotion primaryEmotion;
 
-  DiaryPreviewResponse(
-      this.id, this.entryDate, this.title, this.contents, this.primaryEmotion);
+  DiaryPreviewResponse(this.id, this.entryDate, this.title, this.contents, this.primaryEmotion);
 
-  factory DiaryPreviewResponse.fromJson(Map<String, dynamic> json) =>
-      _$DiaryPreviewResponseFromJson(json);
+  factory DiaryPreviewResponse.fromJson(Map<String, dynamic> json) => _$DiaryPreviewResponseFromJson(json);
+}
+
+@JsonSerializable()
+class DiaryFeedbackResponse {
+  int startIndex;
+  int endIndex;
+  String feedback;
+
+  DiaryFeedbackResponse(this.startIndex, this.endIndex, this.feedback);
+
+  factory DiaryFeedbackResponse.fromJson(Map<String, dynamic> json) => _$DiaryFeedbackResponseFromJson(json);
+}
+
+@JsonSerializable()
+class DiaryFeedbackListResponse {
+  List<DiaryFeedbackResponse> feedbacks;
+
+  DiaryFeedbackListResponse(this.feedbacks);
+
+  factory DiaryFeedbackListResponse.fromJson(Map<String, dynamic> json) => _$DiaryFeedbackListResponseFromJson(json);
 }

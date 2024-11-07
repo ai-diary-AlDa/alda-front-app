@@ -1,3 +1,4 @@
+import 'package:alda_front/data/network/dto/request/diary_reqeust.dart';
 import 'package:alda_front/data/network/dto/response/common_response.dart';
 import 'package:alda_front/data/network/dto/response/diary_response.dart';
 import 'package:alda_front/data/network/dto/response/temp_diary_response.dart';
@@ -18,4 +19,8 @@ abstract class DiaryService {
   @GET("/temp")
   @http.Headers({'authorization': 'true'})
   Future<CommonResponse<TempDiaryPreviewListResponse>> getMyTempDiaries();
+
+  @GET("/feedbacks")
+  @http.Headers({'authorization': 'true'})
+  Future<CommonResponse<DiaryFeedbackListResponse>> getDiaryFeedbacks(@Body() GetDiaryFeedbacksReqeust request);
 }

@@ -102,6 +102,46 @@ class _DiaryService implements DiaryService {
     return _value;
   }
 
+  @override
+  Future<CommonResponse<DiaryFeedbackListResponse>> getDiaryFeedbacks(
+      GetDiaryFeedbacksReqeust request) async {
+    final _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'authorization': 'true'};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = request;
+    final _options =
+        _setStreamType<CommonResponse<DiaryFeedbackListResponse>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/feedbacks',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late CommonResponse<DiaryFeedbackListResponse> _value;
+    try {
+      _value = CommonResponse<DiaryFeedbackListResponse>.fromJson(
+        _result.data!,
+        (json) =>
+            DiaryFeedbackListResponse.fromJson(json as Map<String, dynamic>),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
