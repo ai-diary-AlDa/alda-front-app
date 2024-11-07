@@ -39,7 +39,6 @@ _i174.GetIt $initGetIt(
     environment,
     environmentFilter,
   );
-  gh.factory<_i1000.DiaryEditBloc>(() => _i1000.DiaryEditBloc());
   gh.factory<_i820.CalendarBloc>(() => _i820.CalendarBloc());
   gh.lazySingleton<_i847.TempDiaryRepository>(() =>
       _i263.TempDiaryRepositoryImpl(diaryService: gh<_i271.DiaryService>()));
@@ -53,6 +52,8 @@ _i174.GetIt $initGetIt(
       () => _i105.LoadDiaryFeedbacksUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i634.DiaryTopicSelectBloc>(() =>
       _i634.DiaryTopicSelectBloc(gh<_i229.LoadTempDairyPreviewListUsecase>()));
+  gh.factory<_i1000.DiaryEditBloc>(
+      () => _i1000.DiaryEditBloc(gh<_i105.LoadDiaryFeedbacksUsecase>()));
   gh.factory<_i171.DiaryPreviewListBloc>(() =>
       _i171.DiaryPreviewListBloc(gh<_i813.LoadDiaryPreviewListUsecase>()));
   return getIt;

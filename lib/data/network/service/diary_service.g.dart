@@ -109,10 +109,11 @@ class _DiaryService implements DiaryService {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'authorization': 'true'};
     _headers.removeWhere((k, v) => v == null);
-    final _data = request;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toJson());
     final _options =
         _setStreamType<CommonResponse<DiaryFeedbackListResponse>>(Options(
-      method: 'GET',
+      method: 'POST',
       headers: _headers,
       extra: _extra,
     )

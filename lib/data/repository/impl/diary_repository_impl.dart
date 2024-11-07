@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:alda_front/data/network/dto/request/diary_reqeust.dart';
 import 'package:alda_front/data/network/dto/response/common_response.dart';
 import 'package:alda_front/data/network/dto/response/diary_response.dart';
@@ -44,14 +46,15 @@ class DiaryRepositoryImpl extends DiaryRepository {
 
       return Right(response.data!.toDomain());
     } on DioException catch (ex) {
+      log(ex.toString());
       if (ex.response != null) {
         if (ex.response!.data != null) {
           return Left(ex.response!.data.toString());
         } else {
-          return Left(ex.response!.statusMessage ?? '일기 목록 조회 요청 - 서버 에러 01');
+          return Left(ex.response!.statusMessage ?? '일기 피드백 요청 - 서버 에러 01');
         }
       } else {
-        return Left('일기 목록 조회 요청 - 서버 에러 02');
+        return Left('일기 피드백 요청 - 서버 에러 02');
       }
     } catch (ex) {
       return Left(ex.toString());

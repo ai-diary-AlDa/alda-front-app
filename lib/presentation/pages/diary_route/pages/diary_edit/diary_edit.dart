@@ -34,8 +34,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
   @override
   void initState() {
     super.initState();
-    _editorController = QuillController.basic(
-        editorFocusNode: FocusNode(debugLabel: "DiaryEditor"));
+    _editorController = QuillController.basic(editorFocusNode: FocusNode(debugLabel: "DiaryEditor"));
     _scrollController = ScrollController();
     _deltaToMdConverter = DeltaToMarkdown();
   }
@@ -64,8 +63,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
               children: [
                 DiaryEditPageBar(
                   onPressedSave: () {
-                    log(_deltaToMdConverter
-                        .convert(_editorController.document.toDelta()));
+                    log(_deltaToMdConverter.convert(_editorController.document.toDelta()));
                     Fluttertoast.showToast(
                       msg: '일기를 저장했어요.',
                       timeInSecForIosWeb: 2,
@@ -82,9 +80,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                   child: Column(
                     children: [
                       Container(
-                        decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(24)),
+                        decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(24)),
                         child: Padding(
                           padding: const EdgeInsets.all(16),
                           child: Row(
@@ -97,10 +93,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                                 children: [
                                   Text(
                                     "${DateTime.now().day}",
-                                    style: Theme.of(context)
-                                        .appTexts
-                                        .heading
-                                        .copyWith(fontSize: 48),
+                                    style: Theme.of(context).appTexts.heading.copyWith(fontSize: 48),
                                   ),
                                   SizedBox(
                                     width: 8,
@@ -122,6 +115,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                       DiaryEditor(
                         editorController: _editorController,
                         scrollController: _scrollController,
+                        deltaToMdConverter: _deltaToMdConverter,
                       )
                     ],
                   ),

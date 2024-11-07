@@ -1,26 +1,44 @@
 part of 'diary_edit_bloc.dart';
 
 final class DiaryEditState extends Equatable {
-  final bool isDiaryFeedbacked;
+  final bool canFeedback;
   final DiaryFeedbackState feedbackState;
+  final String diaryTitle;
+  final String diaryContents;
+  final DateTime diaryEntryDate;
 
   const DiaryEditState(
-      {required this.isDiaryFeedbacked, required this.feedbackState});
+      {required this.canFeedback,
+      required this.feedbackState,
+      required this.diaryTitle,
+      required this.diaryContents,
+      required this.diaryEntryDate});
 
   factory DiaryEditState.initial() {
     return DiaryEditState(
-        isDiaryFeedbacked: false, feedbackState: LoadingDiaryFeedbackState());
+        canFeedback: false,
+        feedbackState: LoadingDiaryFeedbackState(),
+        diaryTitle: '',
+        diaryContents: '',
+        diaryEntryDate: DateTime.now());
   }
 
   DiaryEditState copyWith(
-      {bool? isDiaryFeedbacked, DiaryFeedbackState? feedbackState}) {
+      {bool? canFeedback,
+      DiaryFeedbackState? feedbackState,
+      String? diaryTitle,
+      String? diaryContents,
+      DateTime? diaryEntryDate}) {
     return DiaryEditState(
-        isDiaryFeedbacked: isDiaryFeedbacked ?? this.isDiaryFeedbacked,
-        feedbackState: feedbackState ?? this.feedbackState);
+        canFeedback: canFeedback ?? this.canFeedback,
+        feedbackState: feedbackState ?? this.feedbackState,
+        diaryTitle: diaryTitle ?? this.diaryTitle,
+        diaryContents: diaryContents ?? this.diaryContents,
+        diaryEntryDate: diaryEntryDate ?? this.diaryEntryDate);
   }
 
   @override
-  List<Object?> get props => [isDiaryFeedbacked, feedbackState];
+  List<Object?> get props => [canFeedback, feedbackState, diaryTitle, diaryContents, diaryEntryDate];
 }
 
 abstract class DiaryFeedbackState extends Equatable {

@@ -20,7 +20,7 @@ abstract class DiaryService {
   @http.Headers({'authorization': 'true'})
   Future<CommonResponse<TempDiaryPreviewListResponse>> getMyTempDiaries();
 
-  @GET("/feedbacks")
+  @POST("/feedbacks")
   @http.Headers({'authorization': 'true'})
   Future<CommonResponse<DiaryFeedbackListResponse>> getDiaryFeedbacks(@Body() GetDiaryFeedbacksReqeust request);
 }

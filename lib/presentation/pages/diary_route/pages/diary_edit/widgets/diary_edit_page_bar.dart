@@ -40,28 +40,21 @@ class DiaryEditPageBar extends StatelessWidget {
               Row(
                 children: [
                   BlocConsumer<DiaryEditBloc, DiaryEditState>(
-                      listenWhen: (previous, current) =>
-                          previous.feedbackState != current.feedbackState,
+                      listenWhen: (previous, current) => previous.feedbackState != current.feedbackState,
                       listener: (context, state) {
                         if (state.feedbackState is LoadedDiaryFeedbackState ||
                             state.feedbackState is ErrorDiaryFeedbackState) {
                           Navigator.pop(context);
                         }
                       },
-                      buildWhen: (previous, current) =>
-                          previous.isDiaryFeedbacked !=
-                          current.isDiaryFeedbacked,
+                      buildWhen: (previous, current) => previous.canFeedback != current.canFeedback,
                       builder: (context, state) {
                         return Button(
-                          onPressed: state.isDiaryFeedbacked
-                              ? null
-                              : () => _onFeedbackButtonPressed(context),
+                          onPressed: state.canFeedback ? () => _onFeedbackButtonPressed(context) : null,
                           child: HeroIcon(
                             HeroIcons.sparkles,
                             style: HeroIconStyle.solid,
-                            color: state.isDiaryFeedbacked
-                                ? AppColors.gray
-                                : AppColors.black01,
+                            color: state.canFeedback ? AppColors.black01 : AppColors.gray,
                           ),
                         );
                       }),
@@ -72,9 +65,10 @@ class DiaryEditPageBar extends StatelessWidget {
                     onPressed: onPressedSave,
                     child: Text(
                       "저장",
-                      style: Theme.of(context).appTexts.body.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.black01),
+                      style: Theme.of(context)
+                          .appTexts
+                          .body
+                          .copyWith(fontWeight: FontWeight.bold, color: AppColors.black01),
                     ),
                   )
                 ],
