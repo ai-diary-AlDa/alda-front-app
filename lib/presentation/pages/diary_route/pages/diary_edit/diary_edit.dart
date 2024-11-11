@@ -34,7 +34,7 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
   @override
   void initState() {
     super.initState();
-    _editorController = QuillController.basic(editorFocusNode: FocusNode(debugLabel: "DiaryEditor"));
+    _editorController = QuillController.basic(editorFocusNode: FocusNode());
     _scrollController = ScrollController();
     _deltaToMdConverter = DeltaToMarkdown();
   }

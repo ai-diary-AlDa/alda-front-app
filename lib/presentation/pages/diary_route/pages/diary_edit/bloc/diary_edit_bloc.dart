@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:alda_front/domain/model/diary_feedback.dart';
 import 'package:alda_front/domain/usecase/load_diary_feedbacks_usecase.dart';
@@ -17,6 +18,7 @@ class DiaryEditBloc extends Bloc<DiaryEditEvent, DiaryEditState> {
   DiaryEditBloc(this._loadDiaryFeedbacksUsecase) : super(DiaryEditState.initial()) {
     on<LoadDiaryFeedbackEvent>(_onLoadDiaryFeedback);
     on<DiaryContentsChangedEvent>(_onDiaryContentsChanged);
+    on<ToggleFeedbackViewEvent>(_onToggleFeedbackView);
   }
 
   Future<void> _onLoadDiaryFeedback(LoadDiaryFeedbackEvent event, Emitter<DiaryEditState> emit) async {
@@ -28,12 +30,19 @@ class DiaryEditBloc extends Bloc<DiaryEditEvent, DiaryEditState> {
     result.fold(
       (error) => emit(state.copyWith(feedbackState: ErrorDiaryFeedbackState())),
       (feedbacks) {
-        emit(state.copyWith(canFeedback: false, feedbackState: LoadedDiaryFeedbackState(feedbacks)));
+        final random = Random();
+        final randomFeedbacks =
+            List.generate(feedbacks.length ~/ 3, (_) => feedbacks[random.nextInt(feedbacks.length)]);
+        emit(state.copyWith(canFeedback: false, feedbackState: LoadedDiaryFeedbackState(randomFeedbacks)));
       },
     );
   }
 
   void _onDiaryContentsChanged(DiaryContentsChangedEvent event, Emitter<DiaryEditState> emit) {
-    emit(state.copyWith(canFeedback: true, diaryContents: event.contents));
+    emit(state.copyWith(canFeedback: event.contents.trim().isEmpty ? false : true, diaryContents: event.contents));
+  }
+
+  void _onToggleFeedbackView(ToggleFeedbackViewEvent event, Emitter<DiaryEditState> emit) {
+    emit(state.copyWith(feedbackView: !state.feedbackView));
   }
 }

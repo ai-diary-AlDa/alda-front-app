@@ -15,3 +15,5 @@ class DiaryContentsChangedEvent extends DiaryEditEvent {
   @override
   List<Object?> get props => [contents];
 }
+
+class ToggleFeedbackViewEvent extends DiaryEditEvent {}

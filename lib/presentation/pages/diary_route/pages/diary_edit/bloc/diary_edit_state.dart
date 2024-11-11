@@ -6,13 +6,15 @@ final class DiaryEditState extends Equatable {
   final String diaryTitle;
   final String diaryContents;
   final DateTime diaryEntryDate;
+  final bool feedbackView;
 
   const DiaryEditState(
       {required this.canFeedback,
       required this.feedbackState,
       required this.diaryTitle,
       required this.diaryContents,
-      required this.diaryEntryDate});
+      required this.diaryEntryDate,
+      required this.feedbackView});
 
   factory DiaryEditState.initial() {
     return DiaryEditState(
@@ -20,7 +22,8 @@ final class DiaryEditState extends Equatable {
         feedbackState: LoadingDiaryFeedbackState(),
         diaryTitle: '',
         diaryContents: '',
-        diaryEntryDate: DateTime.now());
+        diaryEntryDate: DateTime.now(),
+        feedbackView: false);
   }
 
   DiaryEditState copyWith(
@@ -28,17 +31,19 @@ final class DiaryEditState extends Equatable {
       DiaryFeedbackState? feedbackState,
       String? diaryTitle,
       String? diaryContents,
-      DateTime? diaryEntryDate}) {
+      DateTime? diaryEntryDate,
+      bool? feedbackView}) {
     return DiaryEditState(
         canFeedback: canFeedback ?? this.canFeedback,
         feedbackState: feedbackState ?? this.feedbackState,
         diaryTitle: diaryTitle ?? this.diaryTitle,
         diaryContents: diaryContents ?? this.diaryContents,
-        diaryEntryDate: diaryEntryDate ?? this.diaryEntryDate);
+        diaryEntryDate: diaryEntryDate ?? this.diaryEntryDate,
+        feedbackView: feedbackView ?? this.feedbackView);
   }
 
   @override
-  List<Object?> get props => [canFeedback, feedbackState, diaryTitle, diaryContents, diaryEntryDate];
+  List<Object?> get props => [canFeedback, feedbackState, diaryTitle, diaryContents, diaryEntryDate, feedbackView];
 }
 
 abstract class DiaryFeedbackState extends Equatable {

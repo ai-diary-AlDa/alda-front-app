@@ -10,8 +10,7 @@ class SparklesLoadingIndicator extends StatefulWidget {
   });
 
   @override
-  State<SparklesLoadingIndicator> createState() =>
-      _SparklesLoadingIndicatorState();
+  State<SparklesLoadingIndicator> createState() => _SparklesLoadingIndicatorState();
 }
 
 class _SparklesLoadingIndicatorState extends State<SparklesLoadingIndicator> {
@@ -22,7 +21,7 @@ class _SparklesLoadingIndicatorState extends State<SparklesLoadingIndicator> {
     "감정을 이해하는 중이에요...",
     "어떤 말을 할지 고민하고 있어요...",
     "피드백을 적고 있어요...",
-    "거의 다 됐어요! 조금만 더 기다려주세요",
+    "거의 다 됐어요! 조금만 더 기다려주세요.",
     "일기 내용이 길어 시간이 걸리고 있어요..."
   ];
 
@@ -40,12 +39,13 @@ class _SparklesLoadingIndicatorState extends State<SparklesLoadingIndicator> {
         if (!mounted) {
           return;
         }
+        if (counter == _loadingMessages.length - 1) {
+          timer.cancel();
+          return;
+        }
         setState(() {
           _visible = false;
         });
-        if (counter == _loadingMessages.length - 1) {
-          timer.cancel();
-        }
       });
     });
 
@@ -88,10 +88,7 @@ class _SparklesLoadingIndicatorState extends State<SparklesLoadingIndicator> {
           child: Text(
             textAlign: TextAlign.center,
             _loadingMessages[counter],
-            style: Theme.of(context)
-                .appTexts
-                .body
-                .copyWith(color: AppColors.white, fontWeight: FontWeight.bold),
+            style: Theme.of(context).appTexts.body.copyWith(color: AppColors.white, fontWeight: FontWeight.bold),
           ),
         ),
         SizedBox(height: 80),
