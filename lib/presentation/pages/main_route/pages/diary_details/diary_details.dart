@@ -1,12 +1,10 @@
 import 'package:alda_front/domain/model/diary.dart';
 import 'package:alda_front/domain/model/emotion.dart';
 import 'package:alda_front/presentation/common/widgets/button.dart';
-import 'package:alda_front/presentation/pages/main_route/pages/home/bloc/diary_preview_list_bloc.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:intl/intl.dart';
