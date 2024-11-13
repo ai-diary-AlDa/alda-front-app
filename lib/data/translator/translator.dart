@@ -56,3 +56,26 @@ extension DiaryFeedbackListResponseTranslator on DiaryFeedbackListResponse {
     return feedbacks.map((e) => e.toDomain()).toList();
   }
 }
+
+extension DiaryDetailsResponseTranslator on DiaryDetailsResponse {
+  Diary toDomain() {
+    return Diary(
+      id: id,
+      title: title,
+      entryDate: entryDate,
+      contents: contents,
+      analysis: analysis.toDomain(),
+      feedbacks: feedbacks.map((e) => e.toDomain()).toList(),
+    );
+  }
+}
+
+extension DiaryAnalysisResponseTranslator on DiaryAnalysisResponse {
+  DiaryAnalysis toDomain() {
+    return DiaryAnalysis(
+      primaryEmotion: primaryEmotion,
+      secondaryEmotion: secondaryEmotion,
+      tertiaryEmotion: tertiaryEmotion,
+    );
+  }
+}

@@ -7,4 +7,6 @@ abstract class DiaryRepository {
   Future<Either<String, List<Diary>>> getMyDiaries();
 
   Future<Either<String, List<DiaryFeedback>>> getDiaryFeedbacks(GetDiaryFeedbacksReqeust request);
+
+  Future<Either<String, Diary>> getDiaryDetails(String diaryId);
 }

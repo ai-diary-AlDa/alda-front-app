@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'diary_response.g.dart';
 
 @JsonSerializable()
-class DiaryPreviewListResponse {
+final class DiaryPreviewListResponse {
   @JsonKey(name: "diaries")
   List<DiaryPreviewResponse> diaries;
 
@@ -14,7 +14,7 @@ class DiaryPreviewListResponse {
 }
 
 @JsonSerializable()
-class DiaryPreviewResponse {
+final class DiaryPreviewResponse {
   @JsonKey(name: "id")
   String id;
 
@@ -36,7 +36,7 @@ class DiaryPreviewResponse {
 }
 
 @JsonSerializable()
-class DiaryFeedbackResponse {
+final class DiaryFeedbackResponse {
   int startIndex;
   int endIndex;
   String feedback;
@@ -47,10 +47,35 @@ class DiaryFeedbackResponse {
 }
 
 @JsonSerializable()
-class DiaryFeedbackListResponse {
+final class DiaryFeedbackListResponse {
   List<DiaryFeedbackResponse> feedbacks;
 
   DiaryFeedbackListResponse(this.feedbacks);
 
   factory DiaryFeedbackListResponse.fromJson(Map<String, dynamic> json) => _$DiaryFeedbackListResponseFromJson(json);
+}
+
+@JsonSerializable()
+final class DiaryDetailsResponse {
+  String id;
+  DateTime entryDate;
+  String title;
+  String contents;
+  DiaryAnalysisResponse analysis;
+  List<DiaryFeedbackResponse> feedbacks;
+
+  DiaryDetailsResponse(this.id, this.entryDate, this.title, this.contents, this.analysis, this.feedbacks);
+
+  factory DiaryDetailsResponse.fromJson(Map<String, dynamic> json) => _$DiaryDetailsResponseFromJson(json);
+}
+
+@JsonSerializable()
+final class DiaryAnalysisResponse {
+  Emotion primaryEmotion;
+  Emotion secondaryEmotion;
+  Emotion tertiaryEmotion;
+
+  DiaryAnalysisResponse(this.primaryEmotion, this.secondaryEmotion, this.tertiaryEmotion);
+
+  factory DiaryAnalysisResponse.fromJson(Map<String, dynamic> json) => _$DiaryAnalysisResponseFromJson(json);
 }

@@ -79,3 +79,43 @@ Map<String, dynamic> _$DiaryFeedbackListResponseToJson(
     <String, dynamic>{
       'feedbacks': instance.feedbacks,
     };
+
+DiaryDetailsResponse _$DiaryDetailsResponseFromJson(
+        Map<String, dynamic> json) =>
+    DiaryDetailsResponse(
+      json['id'] as String,
+      DateTime.parse(json['entryDate'] as String),
+      json['title'] as String,
+      json['contents'] as String,
+      DiaryAnalysisResponse.fromJson(json['analysis'] as Map<String, dynamic>),
+      (json['feedbacks'] as List<dynamic>)
+          .map((e) => DiaryFeedbackResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DiaryDetailsResponseToJson(
+        DiaryDetailsResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'entryDate': instance.entryDate.toIso8601String(),
+      'title': instance.title,
+      'contents': instance.contents,
+      'analysis': instance.analysis,
+      'feedbacks': instance.feedbacks,
+    };
+
+DiaryAnalysisResponse _$DiaryAnalysisResponseFromJson(
+        Map<String, dynamic> json) =>
+    DiaryAnalysisResponse(
+      $enumDecode(_$EmotionEnumMap, json['primaryEmotion']),
+      $enumDecode(_$EmotionEnumMap, json['secondaryEmotion']),
+      $enumDecode(_$EmotionEnumMap, json['tertiaryEmotion']),
+    );
+
+Map<String, dynamic> _$DiaryAnalysisResponseToJson(
+        DiaryAnalysisResponse instance) =>
+    <String, dynamic>{
+      'primaryEmotion': _$EmotionEnumMap[instance.primaryEmotion]!,
+      'secondaryEmotion': _$EmotionEnumMap[instance.secondaryEmotion]!,
+      'tertiaryEmotion': _$EmotionEnumMap[instance.tertiaryEmotion]!,
+    };
