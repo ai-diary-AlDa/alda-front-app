@@ -1,6 +1,7 @@
 import 'package:alda_front/data/network/dto/response/diary_response.dart';
 import 'package:alda_front/data/network/dto/response/temp_diary_response.dart';
 import 'package:alda_front/domain/model/diary.dart';
+import 'package:alda_front/domain/model/diary_analysis.dart';
 import 'package:alda_front/domain/model/diary_feedback.dart';
 import 'package:alda_front/domain/model/temp_diary.dart';
 
@@ -11,7 +12,7 @@ extension DiaryPreviewResponseTranslator on DiaryPreviewResponse {
       title: title,
       entryDate: entryDate,
       contents: contents,
-      primaryEmotion: primaryEmotion,
+      analysis: DiaryAnalysis(primaryEmotion: primaryEmotion),
     );
   }
 }

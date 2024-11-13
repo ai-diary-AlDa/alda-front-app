@@ -83,7 +83,7 @@ class DiaryPreviewCard extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          diary.primaryEmotion.emoji,
+                          diary.analysis!.primaryEmotion.emoji,
                           style: TextStyle(fontSize: 30, height: 0.9),
                         ),
                       ],

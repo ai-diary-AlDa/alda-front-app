@@ -1,4 +1,5 @@
 import 'package:alda_front/domain/model/diary.dart';
+import 'package:alda_front/domain/model/diary_analysis.dart';
 import 'package:alda_front/domain/model/emotion.dart';
 import 'package:alda_front/presentation/common/widgets/button.dart';
 import 'package:alda_front/themes/colors.dart';
@@ -28,7 +29,11 @@ class _DiaryDetailsPageState extends State<DiaryDetailsPage> {
   late final Document _document;
 
   final diary = Diary(
-      id: "1", entryDate: DateTime.now(), contents: "다이어리내용입니다.", title: "다이어리입니당.", primaryEmotion: Emotion.happy);
+      id: "1",
+      entryDate: DateTime.now(),
+      contents: "다이어리내용입니다.",
+      title: "다이어리입니당.",
+      analysis: DiaryAnalysis(primaryEmotion: Emotion.happy));
 
   @override
   void initState() {
@@ -82,7 +87,7 @@ class _DiaryDetailsPageState extends State<DiaryDetailsPage> {
                               ],
                             ),
                             Text(
-                              diary.primaryEmotion.emoji,
+                              diary.analysis!.primaryEmotion.emoji,
                               style: TextStyle(fontSize: 36, height: 0.8),
                             ),
                           ],
