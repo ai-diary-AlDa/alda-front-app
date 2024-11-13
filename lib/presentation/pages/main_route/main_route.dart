@@ -21,9 +21,7 @@ class MainRoute extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             children: [
               child,
-              ['home', 'calendar'].contains(tabsRouter.currentChild?.path)
-                  ? NavigationFAB()
-                  : SizedBox.shrink()
+              ['home', 'calendar'].contains(tabsRouter.currentChild?.path) ? NavigationFAB() : SizedBox.shrink()
             ],
           ),
         );

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:alda_front/domain/model/temp_diary.dart';
 import 'package:alda_front/domain/usecase/load_temp_dairy_preview_list_usecase.dart';
-import 'package:alda_front/presentation/common/data_load_status.dart';
+import 'package:alda_front/presentation/common/bloc/data_load_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';

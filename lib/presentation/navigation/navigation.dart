@@ -10,8 +10,7 @@ class AppRouter extends RootStackRouter {
             page: MainRoute.page,
             path: "/main",
             children: [
-              AutoRoute(
-                  page: HomeRoute.page, path: 'home', maintainState: false),
+              AutoRoute(page: HomeRoute.page, path: 'home', maintainState: false),
               AutoRoute(page: CalendarRoute.page, path: 'calendar'),
             ],
             transitionsBuilder: TransitionsBuilders.fadeIn,
@@ -21,11 +20,11 @@ class AppRouter extends RootStackRouter {
             path: '/diary',
             children: [
               CustomRoute(page: DiaryTopicSelectRoute.page, path: 'topic'),
-              CustomRoute(
-                  page: DiaryEditRoute.page, path: 'edit', maintainState: false)
+              CustomRoute(page: DiaryEditRoute.page, path: 'edit', maintainState: false)
             ],
             transitionsBuilder: TransitionsBuilders.slideBottom,
             durationInMilliseconds: 300,
-            reverseDurationInMilliseconds: 300)
+            reverseDurationInMilliseconds: 300),
+        CustomRoute(page: DiaryDetailsRoute.page, path: '/diary/:diaryId'),
       ];
 }

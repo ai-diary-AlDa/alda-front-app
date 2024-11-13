@@ -46,10 +46,10 @@ _i174.GetIt $initGetIt(
       () => _i521.DiaryRepositoryImpl(diaryService: gh<_i271.DiaryService>()));
   gh.factory<_i229.LoadTempDairyPreviewListUsecase>(() =>
       _i229.LoadTempDairyPreviewListUsecase(gh<_i847.TempDiaryRepository>()));
-  gh.factory<_i813.LoadDiaryPreviewListUsecase>(
-      () => _i813.LoadDiaryPreviewListUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i105.LoadDiaryFeedbacksUsecase>(
       () => _i105.LoadDiaryFeedbacksUsecase(gh<_i787.DiaryRepository>()));
+  gh.factory<_i813.LoadDiaryPreviewListUsecase>(
+      () => _i813.LoadDiaryPreviewListUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i634.DiaryTopicSelectBloc>(() =>
       _i634.DiaryTopicSelectBloc(gh<_i229.LoadTempDairyPreviewListUsecase>()));
   gh.factory<_i1000.DiaryEditBloc>(
