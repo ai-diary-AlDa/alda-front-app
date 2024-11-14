@@ -1,11 +1,11 @@
-import 'package:alda_front/domain/model/diary.dart';
-import 'package:alda_front/domain/model/diary_analysis.dart';
-import 'package:alda_front/domain/model/emotion.dart';
+import 'package:alda_front/injectable/configurations.dart';
 import 'package:alda_front/presentation/common/widgets/button.dart';
+import 'package:alda_front/presentation/pages/main_route/pages/diary_details/bloc/diary_details_bloc.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:intl/intl.dart';
@@ -26,23 +26,12 @@ class _DiaryDetailsPageState extends State<DiaryDetailsPage> {
   late final QuillController _editorController;
   late final ScrollController _scrollController;
   late final MarkdownToDelta _mdToDeltaConverter;
-  late final Document _document;
-
-  final diary = Diary(
-      id: "1",
-      entryDate: DateTime.now(),
-      contents: "다이어리내용입니다.",
-      title: "다이어리입니당.",
-      analysis: DiaryAnalysis(primaryEmotion: Emotion.happy));
 
   @override
   void initState() {
     _mdToDeltaConverter = MarkdownToDelta(markdownDocument: md.Document(encodeHtml: false));
-    _document = Document.fromDelta(_mdToDeltaConverter.convert(diary.contents));
-    _editorController = QuillController(
-        selection: TextSelection(baseOffset: 0, extentOffset: 0),
-        document: _document,
-        configurations: QuillControllerConfigurations());
+    _editorController = QuillController.basic();
+    _editorController.readOnly = true;
     _scrollController = ScrollController();
     super.initState();
   }
@@ -55,62 +44,76 @@ class _DiaryDetailsPageState extends State<DiaryDetailsPage> {
         bottom: false,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            children: [
-              DiaryDetailsPageBar(diaryTitle: diary.title),
-              Expanded(
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(24)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+          child: BlocProvider(
+            create: (context) => getIt<DiaryDetailsBloc>()..add(LoadDiaryDetailsEvent(widget.diaryId)),
+            child: BlocConsumer<DiaryDetailsBloc, DiaryDetailsState>(
+                listenWhen: (previous, current) => current.diaryDetailsDataState is LoadedDiaryDetailsState,
+                listener: (context, state) {
+                  _editorController.document = Document.fromDelta(
+                      _mdToDeltaConverter.convert(state.diaryDetailsDataState.diary?.contents ?? ""));
+                },
+                buildWhen: (previous, current) => current.diaryDetailsDataState is LoadedDiaryDetailsState,
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      DiaryDetailsPageBar(diaryTitle: state.diaryDetailsDataState.diary?.title ?? ""),
+                      Expanded(
+                        child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.baseline,
-                              textBaseline: TextBaseline.alphabetic,
-                              children: [
-                                Text(
-                                  "${DateTime.now().day}",
-                                  style: Theme.of(context).appTexts.heading.copyWith(fontSize: 48),
+                            Container(
+                              decoration:
+                                  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(24)),
+                              child: Padding(
+                                padding: const EdgeInsets.all(16),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      crossAxisAlignment: CrossAxisAlignment.baseline,
+                                      textBaseline: TextBaseline.alphabetic,
+                                      children: [
+                                        Text(
+                                          state.diaryDetailsDataState.diary?.entryDate.day.toString() ?? "",
+                                          style: Theme.of(context).appTexts.heading.copyWith(fontSize: 48),
+                                        ),
+                                        SizedBox(
+                                          width: 8,
+                                        ),
+                                        Text(
+                                          DateFormat("MMMM")
+                                              .format(state.diaryDetailsDataState.diary?.entryDate ?? DateTime.now()),
+                                          style: Theme.of(context).appTexts.body,
+                                        )
+                                      ],
+                                    ),
+                                    Text(
+                                      state.diaryDetailsDataState.diary?.analysis?.primaryEmotion.emoji ?? "",
+                                      style: TextStyle(fontSize: 36, height: 0.8),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(
-                                  width: 8,
+                              ),
+                            ),
+                            Expanded(
+                              child: Scrollbar(
+                                controller: _scrollController,
+                                child: QuillEditor.basic(
+                                  scrollController: _scrollController,
+                                  controller: _editorController,
+                                  configurations: QuillEditorConfigurations(
+                                      embedBuilders: FlutterQuillEmbeds.editorBuilders(),
+                                      showCursor: false,
+                                      padding: EdgeInsets.fromLTRB(0, 10, 0, MediaQuery.of(context).size.height * 0.4)),
                                 ),
-                                Text(
-                                  DateFormat("MMMM").format(DateTime.now()),
-                                  style: Theme.of(context).appTexts.body,
-                                )
-                              ],
-                            ),
-                            Text(
-                              diary.analysis!.primaryEmotion.emoji,
-                              style: TextStyle(fontSize: 36, height: 0.8),
-                            ),
+                              ),
+                            )
                           ],
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Scrollbar(
-                        controller: _scrollController,
-                        child: QuillEditor.basic(
-                          scrollController: _scrollController,
-                          controller: _editorController,
-                          configurations: QuillEditorConfigurations(
-                              embedBuilders: FlutterQuillEmbeds.editorBuilders(),
-                              showCursor: false,
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, MediaQuery.of(context).size.height * 0.4)),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+                    ],
+                  );
+                }),
           ),
         ),
       ),
@@ -147,11 +150,10 @@ class DiaryDetailsPageBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-              child: Text(
+          Text(
             diaryTitle,
             style: Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold),
-          )),
+          ),
         ],
       ),
     );

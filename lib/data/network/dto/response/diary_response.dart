@@ -72,8 +72,8 @@ final class DiaryDetailsResponse {
 @JsonSerializable()
 final class DiaryAnalysisResponse {
   Emotion primaryEmotion;
-  Emotion secondaryEmotion;
-  Emotion tertiaryEmotion;
+  Emotion? secondaryEmotion;
+  Emotion? tertiaryEmotion;
 
   DiaryAnalysisResponse(this.primaryEmotion, this.secondaryEmotion, this.tertiaryEmotion);
 

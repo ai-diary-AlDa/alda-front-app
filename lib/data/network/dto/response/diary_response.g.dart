@@ -108,14 +108,14 @@ DiaryAnalysisResponse _$DiaryAnalysisResponseFromJson(
         Map<String, dynamic> json) =>
     DiaryAnalysisResponse(
       $enumDecode(_$EmotionEnumMap, json['primaryEmotion']),
-      $enumDecode(_$EmotionEnumMap, json['secondaryEmotion']),
-      $enumDecode(_$EmotionEnumMap, json['tertiaryEmotion']),
+      $enumDecodeNullable(_$EmotionEnumMap, json['secondaryEmotion']),
+      $enumDecodeNullable(_$EmotionEnumMap, json['tertiaryEmotion']),
     );
 
 Map<String, dynamic> _$DiaryAnalysisResponseToJson(
         DiaryAnalysisResponse instance) =>
     <String, dynamic>{
       'primaryEmotion': _$EmotionEnumMap[instance.primaryEmotion]!,
-      'secondaryEmotion': _$EmotionEnumMap[instance.secondaryEmotion]!,
-      'tertiaryEmotion': _$EmotionEnumMap[instance.tertiaryEmotion]!,
+      'secondaryEmotion': _$EmotionEnumMap[instance.secondaryEmotion],
+      'tertiaryEmotion': _$EmotionEnumMap[instance.tertiaryEmotion],
     };
