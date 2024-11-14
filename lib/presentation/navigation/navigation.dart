@@ -25,6 +25,11 @@ class AppRouter extends RootStackRouter {
             transitionsBuilder: TransitionsBuilders.slideBottom,
             durationInMilliseconds: 300,
             reverseDurationInMilliseconds: 300),
-        CustomRoute(page: DiaryDetailsRoute.page, path: '/diary/:diaryId'),
+        CustomRoute(
+            page: DiaryDetailsRoute.page,
+            path: '/diary/:diaryId',
+            transitionsBuilder: TransitionsBuilders.slideLeft,
+            durationInMilliseconds: 300,
+            reverseDurationInMilliseconds: 300),
       ];
 }
