@@ -19,6 +19,8 @@ class DiaryDetailsBloc extends Bloc<DiaryDetailsEvent, DiaryDetailsState> {
   Future<void> _onLoadDiaryDetails(LoadDiaryDetailsEvent event, Emitter<DiaryDetailsState> emit) async {
     emit(state.copyWith(diaryDetailsDataState: LoadingDiaryDetailsState()));
 
+    await Future.delayed(Duration(seconds: 3));
+
     final result = await _loadDiaryDetailsUsecase.execute(LoadDiaryDetailsUsecaseInput(diaryId: event.diaryId));
 
     result.fold(

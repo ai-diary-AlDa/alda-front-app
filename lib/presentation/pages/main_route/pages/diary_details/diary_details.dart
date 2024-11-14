@@ -7,10 +7,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_quill/flutter_quill.dart';
+import 'package:flutter_quill/quill_delta.dart';
 import 'package:flutter_quill_extensions/flutter_quill_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:markdown_quill/markdown_quill.dart';
 import 'package:markdown/markdown.dart' as md;
+import 'package:skeletonizer/skeletonizer.dart';
 
 @RoutePage()
 class DiaryDetailsPage extends StatefulWidget {
@@ -49,63 +51,95 @@ class _DiaryDetailsPageState extends State<DiaryDetailsPage> {
             child: BlocConsumer<DiaryDetailsBloc, DiaryDetailsState>(
                 listenWhen: (previous, current) => current.diaryDetailsDataState is LoadedDiaryDetailsState,
                 listener: (context, state) {
-                  _editorController.document = Document.fromDelta(
-                      _mdToDeltaConverter.convert(state.diaryDetailsDataState.diary?.contents ?? ""));
+                  if (state.diaryDetailsDataState is LoadedDiaryDetailsState) {
+                    _editorController.document = Document.fromDelta(
+                        _mdToDeltaConverter.convert(state.diaryDetailsDataState.diary?.contents ?? ""));
+                  } else if (state.diaryDetailsDataState is LoadingDiaryDetailsState) {
+                    _editorController.document = Document.fromDelta(Delta()..insert("Loading..."));
+                  }
                 },
-                buildWhen: (previous, current) => current.diaryDetailsDataState is LoadedDiaryDetailsState,
+                buildWhen: (previous, current) => current.diaryDetailsDataState != previous.diaryDetailsDataState,
                 builder: (context, state) {
+                  bool isLoading = state.diaryDetailsDataState is LoadingDiaryDetailsState;
+
                   return Column(
                     children: [
                       DiaryDetailsPageBar(diaryTitle: state.diaryDetailsDataState.diary?.title ?? ""),
                       Expanded(
                         child: Column(
                           children: [
-                            Container(
-                              decoration:
-                                  BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(24)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.baseline,
-                                      textBaseline: TextBaseline.alphabetic,
-                                      children: [
-                                        Text(
-                                          state.diaryDetailsDataState.diary?.entryDate.day.toString() ?? "",
-                                          style: Theme.of(context).appTexts.heading.copyWith(fontSize: 48),
-                                        ),
-                                        SizedBox(
-                                          width: 8,
-                                        ),
-                                        Text(
-                                          DateFormat("MMMM")
-                                              .format(state.diaryDetailsDataState.diary?.entryDate ?? DateTime.now()),
-                                          style: Theme.of(context).appTexts.body,
-                                        )
-                                      ],
-                                    ),
-                                    Text(
-                                      state.diaryDetailsDataState.diary?.analysis?.primaryEmotion.emoji ?? "",
-                                      style: TextStyle(fontSize: 36, height: 0.8),
-                                    ),
-                                  ],
+                            Skeletonizer(
+                              enabled: isLoading,
+                              enableSwitchAnimation: true,
+                              child: Container(
+                                decoration:
+                                    BoxDecoration(color: AppColors.white, borderRadius: BorderRadius.circular(24)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                                        textBaseline: TextBaseline.alphabetic,
+                                        children: [
+                                          Text(
+                                            state.diaryDetailsDataState.diary?.entryDate.day.toString() ?? "12",
+                                            style: Theme.of(context).appTexts.heading.copyWith(fontSize: 48),
+                                          ),
+                                          SizedBox(
+                                            width: 8,
+                                          ),
+                                          Text(
+                                            DateFormat("MMMM")
+                                                .format(state.diaryDetailsDataState.diary?.entryDate ?? DateTime.now()),
+                                            style: Theme.of(context).appTexts.body,
+                                          )
+                                        ],
+                                      ),
+                                      Text(
+                                        state.diaryDetailsDataState.diary?.analysis?.primaryEmotion.emoji ?? "😀",
+                                        style: TextStyle(fontSize: 36, height: 0.8),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Scrollbar(
-                                controller: _scrollController,
-                                child: QuillEditor.basic(
-                                  scrollController: _scrollController,
-                                  controller: _editorController,
-                                  configurations: QuillEditorConfigurations(
-                                      embedBuilders: FlutterQuillEmbeds.editorBuilders(),
-                                      showCursor: false,
-                                      padding: EdgeInsets.fromLTRB(0, 10, 0, MediaQuery.of(context).size.height * 0.4)),
-                                ),
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10),
+                                    child: AnimatedOpacity(
+                                      duration: Duration(milliseconds: 300),
+                                      opacity: isLoading ? 1 : 0,
+                                      child: Skeletonizer.zone(
+                                        enabled: isLoading,
+                                        child: Bone.multiText(
+                                          lines: 5,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Scrollbar(
+                                    controller: _scrollController,
+                                    child: AnimatedOpacity(
+                                      duration: Duration(milliseconds: 300),
+                                      opacity: isLoading ? 0 : 1,
+                                      child: QuillEditor.basic(
+                                        scrollController: _scrollController,
+                                        controller: _editorController,
+                                        configurations: QuillEditorConfigurations(
+                                            embedBuilders: FlutterQuillEmbeds.editorBuilders(),
+                                            showCursor: false,
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 10, 0, MediaQuery.of(context).size.height * 0.4)),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             )
                           ],
@@ -150,9 +184,13 @@ class DiaryDetailsPageBar extends StatelessWidget {
               ),
             ],
           ),
-          Text(
-            diaryTitle,
-            style: Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold),
+          Skeletonizer(
+            enabled: diaryTitle.isEmpty,
+            enableSwitchAnimation: true,
+            child: Text(
+              diaryTitle.isEmpty ? "일기 제목입니다." : diaryTitle,
+              style: Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
