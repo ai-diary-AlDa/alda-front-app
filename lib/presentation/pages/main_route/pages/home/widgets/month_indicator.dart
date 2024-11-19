@@ -4,6 +4,7 @@ import 'package:alda_front/themes/theme.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class MonthIndicator extends StatelessWidget {
   const MonthIndicator({
@@ -17,8 +18,7 @@ class MonthIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count =
-        groupBy(diaries, (diary) => diary.entryDate)[element.entryDate]!.length;
+    int count = groupBy(diaries, (diary) => diary.entryDate)[element.entryDate]!.length;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
@@ -30,15 +30,15 @@ class MonthIndicator extends StatelessWidget {
             DateFormat('yyyy년 MM월').format(element.entryDate),
             style: Theme.of(context).appTexts.label,
           ),
-          Container(
-            decoration: BoxDecoration(
-                color: AppColors.lightGray,
-                borderRadius: BorderRadius.circular(20)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
-              child: Text(
-                "$count개의 일기",
-                style: Theme.of(context).appTexts.label,
+          Skeleton.leaf(
+            child: Container(
+              decoration: BoxDecoration(color: AppColors.lightGray, borderRadius: BorderRadius.circular(20)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                child: Text(
+                  "$count개의 일기",
+                  style: Theme.of(context).appTexts.label,
+                ),
               ),
             ),
           )

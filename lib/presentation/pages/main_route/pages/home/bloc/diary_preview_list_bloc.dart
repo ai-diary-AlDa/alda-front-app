@@ -20,7 +20,7 @@ class DiaryPreviewListBloc extends Bloc<DiaryPreviewListEvent, DiaryPreviewListS
   Future<void> _onLoadDiaryPreviewList(LoadDiaryPreviewListEvent event, Emitter<DiaryPreviewListState> emit) async {
     emit(LoadingDiaryPreviewListState());
 
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
 
     final result = await _loadDiaryPreviewListUsecase.execute(null);
     result.fold(

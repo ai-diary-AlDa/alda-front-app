@@ -1,3 +1,6 @@
+import 'package:alda_front/domain/model/diary.dart';
+import 'package:alda_front/domain/model/diary_analysis.dart';
+import 'package:alda_front/domain/model/emotion.dart';
 import 'package:alda_front/injectable/configurations.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/home/bloc/diary_preview_list_bloc.dart';
 import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/diary_preview_card.dart';
@@ -5,11 +8,11 @@ import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/list
 import 'package:alda_front/presentation/pages/main_route/pages/home/widgets/month_indicator.dart';
 import 'package:alda_front/themes/colors.dart';
 import 'package:alda_front/themes/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grouped_list/grouped_list.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class DiaryListSection extends StatefulWidget {
   const DiaryListSection({super.key});
@@ -22,13 +25,12 @@ class _DiaryListSectionState extends State<DiaryListSection> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<DiaryPreviewListBloc>(
-        create: (context) =>
-            getIt<DiaryPreviewListBloc>()..add(LoadDiaryPreviewListEvent()),
+        create: (context) => getIt<DiaryPreviewListBloc>()..add(LoadDiaryPreviewListEvent()),
         child: Expanded(
           child: BlocBuilder<DiaryPreviewListBloc, DiaryPreviewListState>(
-              buildWhen: (prev, cur) =>
-                  prev.status != cur.status || prev.diaries != cur.diaries,
+              buildWhen: (prev, cur) => prev.status != cur.status || prev.diaries != cur.diaries,
               builder: (context, state) {
+                final isLoading = state is LoadingDiaryPreviewListState;
                 if (state is EmptyDiaryPreviewListState) {
                   return RefreshIndicator.adaptive(
                     onRefresh: () => _onRefresh(context),
@@ -51,10 +53,9 @@ class _DiaryListSectionState extends State<DiaryListSection> {
                                 SizedBox(height: 32),
                                 Text(
                                   "일기가 없어요...",
-                                  style:
-                                      Theme.of(context).appTexts.title.copyWith(
-                                            color: AppColors.black02,
-                                          ),
+                                  style: Theme.of(context).appTexts.title.copyWith(
+                                        color: AppColors.black02,
+                                      ),
                                 ),
                                 SizedBox(height: 16),
                                 Text(
@@ -69,39 +70,44 @@ class _DiaryListSectionState extends State<DiaryListSection> {
                       );
                     }),
                   );
-                } else if (state is LoadingDiaryPreviewListState) {
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 110.0),
-                    child: Center(
-                      child: CupertinoActivityIndicator(
-                        radius: 15,
-                      ),
-                    ),
-                  );
-                } else if (state is LoadedDiaryPreviewListState) {
+                } else if (state is LoadedDiaryPreviewListState || state is LoadingDiaryPreviewListState) {
+                  List<Diary> diaries = isLoading
+                      ? List.filled(
+                          7,
+                          Diary(
+                              id: "1",
+                              entryDate: DateTime.now(),
+                              contents: "다이어리 내용 다이어리 내용",
+                              title: "다이어리 제목",
+                              analysis: DiaryAnalysis(primaryEmotion: Emotion.happy)))
+                      : state.diaries!;
                   return Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
                       RefreshIndicator.adaptive(
                         onRefresh: () => _onRefresh(context),
-                        child: GroupedListView(
-                          physics: AlwaysScrollableScrollPhysics(),
-                          padding: EdgeInsets.only(bottom: 130),
-                          elements: state.diaries!,
-                          groupBy: (diary) => DateTime(
-                              diary.entryDate.year, diary.entryDate.month),
-                          itemBuilder: (innerContext, element) =>
-                              DiaryPreviewCard(diary: element),
-                          itemComparator: (item1, item2) =>
-                              item1.entryDate.compareTo(item2.entryDate),
-                          groupHeaderBuilder: (element) => MonthIndicator(
-                            element: element,
-                            diaries: state.diaries!,
+                        child: Skeletonizer(
+                          enabled: isLoading,
+                          enableSwitchAnimation: true,
+                          child: GroupedListView(
+                            physics: AlwaysScrollableScrollPhysics(),
+                            padding: EdgeInsets.only(bottom: 130),
+                            elements: diaries,
+                            groupBy: (diary) => DateTime(diary.entryDate.year, diary.entryDate.month),
+                            itemBuilder: (innerContext, element) => DiaryPreviewCard(
+                              diary: element,
+                              isLoading: isLoading,
+                            ),
+                            itemComparator: (item1, item2) => item1.entryDate.compareTo(item2.entryDate),
+                            groupHeaderBuilder: (element) => MonthIndicator(
+                              element: element,
+                              diaries: diaries,
+                            ),
+                            stickyHeaderBackgroundColor: AppColors.white,
+                            // useStickyGroupSeparators: true,
+                            separator: SizedBox(height: 16),
+                            order: GroupedListOrder.DESC,
                           ),
-                          stickyHeaderBackgroundColor: AppColors.white,
-                          // useStickyGroupSeparators: true,
-                          separator: SizedBox(height: 16),
-                          order: GroupedListOrder.DESC,
                         ),
                       ),
                       ListViewShadow()
@@ -109,9 +115,7 @@ class _DiaryListSectionState extends State<DiaryListSection> {
                   );
                 } else {
                   return RefreshIndicator.adaptive(onRefresh: () {
-                    context
-                        .read<DiaryPreviewListBloc>()
-                        .add(LoadDiaryPreviewListEvent());
+                    context.read<DiaryPreviewListBloc>().add(LoadDiaryPreviewListEvent());
                     return Future.value();
                   }, child: LayoutBuilder(builder: (contex, constraints) {
                     return SingleChildScrollView(
@@ -132,10 +136,9 @@ class _DiaryListSectionState extends State<DiaryListSection> {
                               SizedBox(height: 32),
                               Text(
                                 "일기를 불러오지 못했어요...",
-                                style:
-                                    Theme.of(context).appTexts.title.copyWith(
-                                          color: AppColors.black02,
-                                        ),
+                                style: Theme.of(context).appTexts.title.copyWith(
+                                      color: AppColors.black02,
+                                    ),
                               ),
                               SizedBox(height: 16),
                               Text(
