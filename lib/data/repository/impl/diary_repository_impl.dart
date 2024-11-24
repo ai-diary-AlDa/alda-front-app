@@ -78,4 +78,25 @@ class DiaryRepositoryImpl extends DiaryRepository {
       return Left(ex.toString());
     }
   }
+
+  @override
+  Future<Either<String, String>> saveDiary(CreateDiaryRequest request) async {
+    try {
+      final response = await _diaryService.saveDiary(request);
+
+      return Right(response.data!.id);
+    } on DioException catch (ex) {
+      if (ex.response != null) {
+        if (ex.response!.data != null) {
+          return Left(ex.response!.data.toString());
+        } else {
+          return Left(ex.response!.statusMessage ?? '일기 저장 요청 - 서버 에러 01');
+        }
+      } else {
+        return Left('일기 저장 요청 - 서버 에러 02');
+      }
+    } catch (ex) {
+      return Left(ex.toString());
+    }
+  }
 }

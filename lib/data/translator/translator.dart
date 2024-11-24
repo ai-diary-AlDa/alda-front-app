@@ -46,7 +46,7 @@ extension DiaryFeedbackResponseTranslator on DiaryFeedbackResponse {
     return DiaryFeedback(
       startIndex: startIndex,
       endIndex: endIndex,
-      feedback: feedback,
+      contents: feedback,
     );
   }
 }

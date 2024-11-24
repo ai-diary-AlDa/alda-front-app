@@ -20,6 +20,7 @@ import '../domain/usecase/load_diary_details_usecase.dart' as _i67;
 import '../domain/usecase/load_diary_feedbacks_usecase.dart' as _i105;
 import '../domain/usecase/load_diary_preview_list_usecase.dart' as _i813;
 import '../domain/usecase/load_temp_dairy_preview_list_usecase.dart' as _i229;
+import '../domain/usecase/save_diary_usecase.dart' as _i758;
 import '../presentation/pages/diary_route/pages/diary_edit/bloc/diary_edit_bloc.dart'
     as _i1000;
 import '../presentation/pages/diary_route/pages/diary_topic_select/bloc/diary_topic_select_bloc.dart'
@@ -55,12 +56,16 @@ _i174.GetIt $initGetIt(
       () => _i813.LoadDiaryPreviewListUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i67.LoadDiaryDetailsUsecase>(
       () => _i67.LoadDiaryDetailsUsecase(gh<_i787.DiaryRepository>()));
+  gh.factory<_i758.SaveDiaryUsecase>(
+      () => _i758.SaveDiaryUsecase(gh<_i787.DiaryRepository>()));
   gh.factory<_i634.DiaryTopicSelectBloc>(() =>
       _i634.DiaryTopicSelectBloc(gh<_i229.LoadTempDairyPreviewListUsecase>()));
   gh.factory<_i48.DiaryDetailsBloc>(
       () => _i48.DiaryDetailsBloc(gh<_i67.LoadDiaryDetailsUsecase>()));
-  gh.factory<_i1000.DiaryEditBloc>(
-      () => _i1000.DiaryEditBloc(gh<_i105.LoadDiaryFeedbacksUsecase>()));
+  gh.factory<_i1000.DiaryEditBloc>(() => _i1000.DiaryEditBloc(
+        gh<_i105.LoadDiaryFeedbacksUsecase>(),
+        gh<_i758.SaveDiaryUsecase>(),
+      ));
   gh.factory<_i171.DiaryPreviewListBloc>(() =>
       _i171.DiaryPreviewListBloc(gh<_i813.LoadDiaryPreviewListUsecase>()));
   return getIt;

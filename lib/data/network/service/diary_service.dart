@@ -27,4 +27,8 @@ abstract class DiaryService {
   @GET("/{diaryId}")
   @http.Headers({'authorization': 'true'})
   Future<CommonResponse<DiaryDetailsResponse>> getDiaryDetails(@Path("diaryId") String diaryId);
+
+  @POST("")
+  @http.Headers({'authorization': 'true'})
+  Future<CommonResponse<DiaryCreatedResponse>> saveDiary(@Body() CreateDiaryRequest request);
 }

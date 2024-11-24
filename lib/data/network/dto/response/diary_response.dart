@@ -79,3 +79,12 @@ final class DiaryAnalysisResponse {
 
   factory DiaryAnalysisResponse.fromJson(Map<String, dynamic> json) => _$DiaryAnalysisResponseFromJson(json);
 }
+
+@JsonSerializable()
+final class DiaryCreatedResponse {
+  final String id;
+
+  DiaryCreatedResponse(this.id);
+
+  factory DiaryCreatedResponse.fromJson(Map<String, dynamic> json) => _$DiaryCreatedResponseFromJson(json);
+}

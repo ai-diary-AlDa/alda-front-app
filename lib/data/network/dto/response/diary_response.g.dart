@@ -119,3 +119,15 @@ Map<String, dynamic> _$DiaryAnalysisResponseToJson(
       'secondaryEmotion': _$EmotionEnumMap[instance.secondaryEmotion],
       'tertiaryEmotion': _$EmotionEnumMap[instance.tertiaryEmotion],
     };
+
+DiaryCreatedResponse _$DiaryCreatedResponseFromJson(
+        Map<String, dynamic> json) =>
+    DiaryCreatedResponse(
+      json['id'] as String,
+    );
+
+Map<String, dynamic> _$DiaryCreatedResponseToJson(
+        DiaryCreatedResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
