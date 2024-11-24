@@ -3,10 +3,12 @@ import 'dart:math';
 
 import 'package:alda_front/domain/model/diary_feedback.dart';
 import 'package:alda_front/domain/usecase/load_diary_feedbacks_usecase.dart';
+import 'package:alda_front/domain/usecase/save_diary_usecase.dart';
 import 'package:alda_front/presentation/common/bloc/data_load_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 
 part 'diary_edit_state.dart';
 part 'diary_edit_event.dart';
@@ -14,11 +16,14 @@ part 'diary_edit_event.dart';
 @injectable
 class DiaryEditBloc extends Bloc<DiaryEditEvent, DiaryEditState> {
   final LoadDiaryFeedbacksUsecase _loadDiaryFeedbacksUsecase;
+  final SaveDiaryUsecase _saveDiaryUsecase;
 
-  DiaryEditBloc(this._loadDiaryFeedbacksUsecase) : super(DiaryEditState.initial()) {
+  DiaryEditBloc(this._loadDiaryFeedbacksUsecase, this._saveDiaryUsecase) : super(DiaryEditState.initial()) {
     on<LoadDiaryFeedbackEvent>(_onLoadDiaryFeedback);
     on<DiaryContentsChangedEvent>(_onDiaryContentsChanged);
     on<ToggleFeedbackViewEvent>(_onToggleFeedbackView);
+    on<SaveDiaryEvent>(_onSaveDiary);
+    on<DiaryTitleChangedEvent>(_onDiaryTitleChanged);
   }
 
   Future<void> _onLoadDiaryFeedback(LoadDiaryFeedbackEvent event, Emitter<DiaryEditState> emit) async {
@@ -44,5 +49,22 @@ class DiaryEditBloc extends Bloc<DiaryEditEvent, DiaryEditState> {
 
   void _onToggleFeedbackView(ToggleFeedbackViewEvent event, Emitter<DiaryEditState> emit) {
     emit(state.copyWith(feedbackView: !state.feedbackView));
+  }
+
+  Future<void> _onSaveDiary(SaveDiaryEvent event, Emitter<DiaryEditState> emit) async {
+    final result = await _saveDiaryUsecase.execute(SaveDiaryUsecaseInput(
+        title: state.diaryTitle,
+        contents: state.diaryContents,
+        entryDate: state.diaryEntryDate,
+        feedbacks: state.feedbackState.feedbacks ?? []));
+
+    result.fold(
+      (error) => emit(state.copyWith(saveDiaryState: ErrorSaveDiaryState())),
+      (success) => emit(state.copyWith(saveDiaryState: SavedDiaryState())),
+    );
+  }
+
+  void _onDiaryTitleChanged(DiaryTitleChangedEvent event, Emitter<DiaryEditState> emit) {
+    emit(state.copyWith(diaryTitle: event.title));
   }
 }

@@ -5,8 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DiaryTitleInputField extends StatefulWidget {
+  final String initialTitle;
+  final void Function(String) onChanged;
+
   const DiaryTitleInputField({
     super.key,
+    required this.initialTitle,
+    required this.onChanged,
   });
 
   @override
@@ -19,8 +24,16 @@ class _DiaryTitleInputFieldState extends State<DiaryTitleInputField> {
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController(
-        text: DateFormat("yyyy년 MM월 dd일의 일기").format(DateTime.now()));
+    _controller = TextEditingController(text: widget.initialTitle);
+    _controller.addListener(() {
+      widget.onChanged(_controller.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   @override
@@ -28,16 +41,11 @@ class _DiaryTitleInputFieldState extends State<DiaryTitleInputField> {
     return AppTextField(
       onEditingComplete: () {
         if (_controller.text.isEmpty) {
-          _controller.text =
-              DateFormat("yyyy년 MM월 dd일의 일기").format(DateTime.now());
+          _controller.text = DateFormat('yyyy년 MM월 dd일의 일기').format(DateTime.now());
         }
       },
-      textStyle:
-          Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold),
-      placeholderStyle: Theme.of(context)
-          .appTexts
-          .body
-          .copyWith(fontWeight: FontWeight.bold, color: AppColors.gray),
+      textStyle: Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold),
+      placeholderStyle: Theme.of(context).appTexts.body.copyWith(fontWeight: FontWeight.bold, color: AppColors.gray),
       placeholder: "제목을 입력해주세요",
       borderColor: Colors.transparent,
       textAlign: TextAlign.center,

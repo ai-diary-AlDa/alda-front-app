@@ -16,11 +16,9 @@ import 'package:pull_down_button/pull_down_button.dart';
 class DiaryEditPageBar extends StatelessWidget {
   const DiaryEditPageBar({
     super.key,
-    required this.onPressedSave,
     required this.onPressedBack,
   });
 
-  final VoidCallback onPressedSave;
   final VoidCallback onPressedBack;
 
   @override
@@ -101,7 +99,9 @@ class DiaryEditPageBar extends StatelessWidget {
                     width: 12,
                   ),
                   Button(
-                    onPressed: onPressedSave,
+                    onPressed: () {
+                      context.read<DiaryEditBloc>().add(SaveDiaryEvent());
+                    },
                     child: Text(
                       "저장",
                       style: Theme.of(context)
@@ -114,7 +114,12 @@ class DiaryEditPageBar extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(width: 250, child: DiaryTitleInputField()),
+          SizedBox(
+              width: 250,
+              child: DiaryTitleInputField(
+                initialTitle: context.read<DiaryEditBloc>().state.diaryTitle,
+                onChanged: (value) => context.read<DiaryEditBloc>().add(DiaryTitleChangedEvent(value)),
+              )),
         ],
       ),
     );

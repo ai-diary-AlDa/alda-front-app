@@ -61,20 +61,23 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                DiaryEditPageBar(
-                  onPressedSave: () {
-                    log(_deltaToMdConverter.convert(_editorController.document.toDelta()));
-                    Fluttertoast.showToast(
-                      msg: '일기를 저장했어요.',
-                      timeInSecForIosWeb: 2,
-                      gravity: ToastGravity.BOTTOM, // Position at bottom
-                      backgroundColor: AppColors.black02,
-                      textColor: Colors.white,
-                    );
+                BlocListener<DiaryEditBloc, DiaryEditState>(
+                  listenWhen: (previous, current) => previous.saveDiaryState != current.saveDiaryState,
+                  listener: (context, state) {
+                    if (state.saveDiaryState is SavedDiaryState) {
+                      Fluttertoast.showToast(msg: "일기가 저장되었어요.");
+                      scheduleMicrotask(() async {
+                        await Future.delayed(Duration(milliseconds: 500), () => context.router.maybePop());
+                      });
+                    } else if (state.saveDiaryState is ErrorSaveDiaryState) {
+                      Fluttertoast.showToast(msg: "내부 오류로 일기 저장에 실패했어요. 잠시 후 다시 시도해주세요.");
+                    }
                   },
-                  onPressedBack: () {
-                    _showBackConfirmModal(context);
-                  },
+                  child: DiaryEditPageBar(
+                    onPressedBack: () {
+                      _showBackConfirmModal(context);
+                    },
+                  ),
                 ),
                 Expanded(
                   child: Column(

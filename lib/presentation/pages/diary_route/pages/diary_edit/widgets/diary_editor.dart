@@ -141,7 +141,7 @@ class _DiaryEditorState extends State<DiaryEditor> {
           top: top,
           left: left,
           child: GestureDetector(
-            onTap: () => _onFeedbackPressed(context, feedback.feedback),
+            onTap: () => _onFeedbackPressed(context, feedback.contents),
             child: Container(
               height: height,
               width: width,
@@ -164,7 +164,7 @@ class _DiaryEditorState extends State<DiaryEditor> {
             duration: const Duration(milliseconds: 300),
             opacity: 1.0,
             child: GestureDetector(
-              onTap: () => _onFeedbackPressed(context, feedback.feedback),
+              onTap: () => _onFeedbackPressed(context, feedback.contents),
               child: Container(
                 height: height,
                 width: width,
@@ -189,7 +189,7 @@ class _DiaryEditorState extends State<DiaryEditor> {
             top: top,
             left: left,
             child: GestureDetector(
-              onTap: () => _onFeedbackPressed(context, feedback.feedback),
+              onTap: () => _onFeedbackPressed(context, feedback.contents),
               child: Container(height: height, width: width, color: Colors.transparent),
             ),
           );
@@ -203,7 +203,7 @@ class _DiaryEditorState extends State<DiaryEditor> {
           top: top,
           left: left,
           child: GestureDetector(
-              onTap: () => _onFeedbackPressed(context, feedback.feedback),
+              onTap: () => _onFeedbackPressed(context, feedback.contents),
               child: Container(height: height, width: width, color: Colors.transparent)),
         ));
       }

@@ -16,6 +16,7 @@ class AppTextField extends StatefulWidget {
     this.textStyle,
     this.placeholderStyle,
     this.onEditingComplete,
+    this.onChanged,
   });
 
   final FocusNode? focusNode;
@@ -28,6 +29,7 @@ class AppTextField extends StatefulWidget {
   final TextStyle? textStyle;
   final TextStyle? placeholderStyle;
   final void Function()? onEditingComplete;
+  final void Function(String)? onChanged;
 
   @override
   State<AppTextField> createState() => _AppTextFieldState();
@@ -51,24 +53,20 @@ class _AppTextFieldState extends State<AppTextField> {
   @override
   Widget build(BuildContext context) {
     return CupertinoTextField(
+        onChanged: widget.onChanged,
         onEditingComplete: widget.onEditingComplete,
         style: widget.textStyle,
         textAlign: widget.textAlign,
         keyboardType: widget.keyboardType,
         focusNode: focusNode,
         decoration: BoxDecoration(
-          border: !focusNode.hasFocus
-              ? Border.all(color: Colors.transparent)
-              : Border.all(color: widget.borderColor),
+          border: !focusNode.hasFocus ? Border.all(color: Colors.transparent) : Border.all(color: widget.borderColor),
           borderRadius: BorderRadius.circular(8),
           color: widget.backgroundColor,
         ),
         placeholder: widget.placeholder,
         placeholderStyle: widget.placeholderStyle ??
-            Theme.of(context)
-                .appTexts
-                .body
-                .copyWith(color: AppColors.gray, fontWeight: FontWeight.normal),
+            Theme.of(context).appTexts.body.copyWith(color: AppColors.gray, fontWeight: FontWeight.normal),
         padding: EdgeInsets.all(12),
         controller: controller);
   }

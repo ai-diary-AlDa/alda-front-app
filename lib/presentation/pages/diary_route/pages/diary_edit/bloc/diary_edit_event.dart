@@ -17,3 +17,14 @@ class DiaryContentsChangedEvent extends DiaryEditEvent {
 }
 
 class ToggleFeedbackViewEvent extends DiaryEditEvent {}
+
+class SaveDiaryEvent extends DiaryEditEvent {}
+
+class DiaryTitleChangedEvent extends DiaryEditEvent {
+  final String title;
+
+  DiaryTitleChangedEvent(this.title);
+
+  @override
+  List<Object?> get props => [title];
+}
