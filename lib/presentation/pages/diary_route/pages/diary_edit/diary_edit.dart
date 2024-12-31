@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:alda_front/injectable/configurations.dart';
 import 'package:alda_front/presentation/navigation/navigation.gr.dart';
@@ -67,7 +66,11 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                     if (state.saveDiaryState is SavedDiaryState) {
                       Fluttertoast.showToast(msg: "일기가 저장되었어요.");
                       scheduleMicrotask(() async {
-                        await Future.delayed(Duration(milliseconds: 500), () => context.router.maybePop());
+                        await Future.delayed(Duration(milliseconds: 500), () {
+                          if (context.mounted) {
+                            context.router.maybePop();
+                          }
+                        });
                       });
                     } else if (state.saveDiaryState is ErrorSaveDiaryState) {
                       Fluttertoast.showToast(msg: "내부 오류로 일기 저장에 실패했어요. 잠시 후 다시 시도해주세요.");
@@ -107,10 +110,6 @@ class _DiaryEditPageState extends State<DiaryEditPage> {
                                   )
                                 ],
                               ),
-                              Text(
-                                "😭",
-                                style: TextStyle(fontSize: 36),
-                              )
                             ],
                           ),
                         ),

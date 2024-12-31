@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:alda_front/domain/model/diary_feedback.dart';
 import 'package:alda_front/domain/usecase/load_diary_feedbacks_usecase.dart';
@@ -35,10 +34,7 @@ class DiaryEditBloc extends Bloc<DiaryEditEvent, DiaryEditState> {
     result.fold(
       (error) => emit(state.copyWith(feedbackState: ErrorDiaryFeedbackState())),
       (feedbacks) {
-        final random = Random();
-        final randomFeedbacks =
-            List.generate(feedbacks.length ~/ 3, (_) => feedbacks[random.nextInt(feedbacks.length)]);
-        emit(state.copyWith(canFeedback: false, feedbackState: LoadedDiaryFeedbackState(randomFeedbacks)));
+        emit(state.copyWith(canFeedback: false, feedbackState: LoadedDiaryFeedbackState(feedbacks)));
       },
     );
   }
