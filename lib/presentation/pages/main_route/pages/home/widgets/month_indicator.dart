@@ -18,7 +18,7 @@ class MonthIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int count = groupBy(diaries, (diary) => diary.entryDate)[element.entryDate]!.length;
+    int count = groupBy(diaries, (diary) => diary.entryDate.month)[element.entryDate.month]!.length;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12),
