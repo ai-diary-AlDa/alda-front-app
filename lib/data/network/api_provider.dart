@@ -14,7 +14,7 @@ abstract class ApiProviderFactory {
 /// 기본 RestFul API
 /// Basic RestFul API
 class ApiProvider implements ApiProviderFactory {
-  static const int apiTimeOut = 1800000;
+  static const int apiTimeOut = 300000;
   static late Dio dio;
 
   bool enableLogger;
